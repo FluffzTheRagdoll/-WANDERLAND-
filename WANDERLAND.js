@@ -26,4 +26,18 @@ let inventory = [];
 //Player info
 playerName = readline.question("\nWhat's your name? Every trekker needs something to be known by...");
 console.log("\nWelcome, " + playerName + "!");
-console.log("\nYou start with " + playerGold + " gold. Good luck with your journey!")
+console.log("\nYou start with " + playerGold + " gold. Good luck with your journey!");
+
+// Weapon info
+let weaponDamage = 0;
+console.log("Your weapon currently does: " + weaponDamage + " damage.");
+console.log("Upon buying a sword, the damage caused by your weapon will increase to 10.");
+
+// Monster stats
+let monsterDefense = 5;
+console.log("Monsters start with: " + monsterDefense + " health.");
+console.log("Monsters can withstand more damage in combat. You'll need to be tactful when fighting them.");
+
+//Healing potion restoration
+let healingPotionValue = 30;
+console.log("The healing potion restores: " + healingPotionValue + " health.");
