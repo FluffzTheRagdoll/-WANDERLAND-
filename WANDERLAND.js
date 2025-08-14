@@ -1,7 +1,7 @@
-const readline = require("readline-sync");
+const readline = require('readline-sync');
 
 /*
-Adventure Game
+~ WANDERLAND ~
 This game will be a text-based game where the player will be able
 to make choices that affect the outcome of the game.
 The player will be able to choose their own path and the story will change
@@ -20,7 +20,6 @@ let playerName = "";
 let playerHealth = 100;
 let playerGold = 20;
 let startingLocation = "Cherry Blossom Gardens";
-let gameRunning = true;
 let inventory = [];
 
 //Player info
@@ -42,73 +41,98 @@ console.log("Monsters can withstand more damage in combat. You'll need to be tac
 let healingPotionValue = 30;
 console.log("The healing potion restores: " + healingPotionValue + " health.");
 
+//Game state variables
+let gameRunning = true;
+let hasWeapon = false;
+let hasArmor = false;
+let hasHealingPotion = false;
+
 // ---------------------------
 // Location tracking
 let currentLocation = "Cherry Blossom Gardens";
 let firstVisit = true;
 
-// Location checking and displaying the relevant information
-if(currentLocation = "Cherry Blossom Gardens") {
-    console.log("\n:..✿ ∞CHERRY BLOSSOM GARDENS∞ ✿..:");
-    console.log("You're in a quite, serene garden with cherry blossom trees on either side of the sandy gravel path you're standing on. The path forks ahead into two.");
-    console.log("\nWhere will you start your journey?");
-    console.log("1: Follow the first path to the blacksmith");
-    console.log("2: Follow the second path to the houses");
-    console.log("3: Turn back and head to your house behind you");
-    console.log("4: Check status");
-    console.log("5: Quit game");
 
-    if(firstVisit) {
-        console.log("\nAn owl swoops down and lands on one of the branches on a cherry blossom tree. It stares at you with deep black eyes. 'Welcome, traveller.' It hoots in a deep, low voice. 'Legend has it that monsters, dangerous beings that threaten our livelihood, roam the territory outside these boundaries...' The owl then tilts its head, and flies away.");
-        firstVisit = false;
+//Main game loop
+while(gameRunning) {
+    // Location checking and displaying the relevant information
+    if(currentLocation = "Cherry Blossom Gardens") {
+        console.log("\n:..✿ ∞CHERRY BLOSSOM GARDENS∞ ✿..:");
+        console.log("You're in a quiet, serene garden with cherry blossom trees on either side of the sandy gravel path you're standing on. The path forks ahead into two.");
+
+        console.log("\nWhere will you start your journey?");
+        console.log("1: Follow the first path to the blacksmith");
+        console.log("2: Follow the second path to the village center");
+        console.log("3: Turn back and head to your house behind you");
+        console.log("4: Check status");
+        console.log("5: Check inventory");
+        console.log("6: Quit game");
+    
+        if(firstVisit) {
+            console.log("\nAn owl swoops down and lands on one of the branches on a cherry blossom tree. It stares at you with deep black eyes. 'Welcome, traveller.' It hoots in a deep, low voice. 'Legend has it that monsters, dangerous beings that threaten our livelihood, roam the territory outside these boundaries...' The owl then tilts its head, and flies away.");
+            firstVisit = false;
+        }
+    } else if(currentLocation === "Blacksmith") {
+        console.log("\n»»——⍟BLACKSMITH⍟——««");
+        console.log("The smell of hot metal fills the air. Clanking sounds rise from somewhere within the small building. Weapons and armour line the walls.");
+        console.log("1: Return to the cherry blossom gardens");
+        console.log("2: Check status");
+        console.log("3: Check inventory");
+        console.log("4: Quit game");
+    } else if(currentLocation === "Village Center") {
+        console.log("_-+°ₒ❀VILLAGE❀ₒ°+-_");
+        console.log("You follow the second path to the village center. There are small houses spread out onto a patch of sandy gravel. Grass surrounds the area, and all is quiet. There are wooden stalls set up in the corners, but one in particular catches your eye.");
+        console.log("1: Return to the cherry blossom gardens.");
+        console.log("2: Check status");
+        console.log("3: Check inventory);
+        console.log("4: Quit game");
+    } else if(currentLocation === "Your house") {
+        console.log("・‥…━━━YOUR HOUSE━━━…‥・");
+        console.log
+    
+    //Get the player's input
+    choice = readline.question("\nEnter choice (number): ");
+    let choiceNum = parseInt(choice);
+    
+    //Handling choices
+    if(currentLocation === "Cherry Blossom Gardens") {
+        if(choiceNum === 1) {
+            currentLocation = "Blacksmith";
+            console.log("\nYou follow the first path and enter the blacksmith's shop.");
+        } else if(choiceNum === 2) {
+            currentLocation = "Village Center";
+            console.log("\nYou follow the second path and enter the village centre.");
+        } else if(choiceNum === 3) {
+            currentLocation = "Your house";
+            console.log("\nYou turn around and enter your house.");
+        } else if(choiceNum === 4) {
+            //Show status
+            console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
+            console.log("Health: " + playerHealth); //insert emoji (start): pink heart
+            console.log("Gold: " + playerGold); //insert emoji (start): coin
+            console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
+        } else if(choiceNum === 5) {
+            gameRunning = false;
+            console.log("Farewell, traveller.")
+        } else {
+            console.log("\nInvalid choice. Please select a number between 1 - 5.");
+        }
+    } else if(currentLocation === "Blacksmith" || currentLocation === "Village Center") {
+        if (choiceNum === 1) {
+            currentLocation = "Cherry Blossom Gardens";
+            console.log("You return to the cherry blossom gardens.");
+        } else if(choiceNum === 2) {
+            //Show status
+            console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
+            console.log("Health: " + playerHealth); //insert emoji (start): pink heart
+            console.log("Gold: " + playerGold); //insert emoji (start): coin
+            console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
+        } else if(choiceNum === 3) {
+            gameRunning = false;
+            console.log("Farewell, traveller.");
+        } else {
+            console.log("\nInvalid choice. Please select a number between 1 - 5.");
+        }
     }
-} else if(currentLocation = "blacksmith") {
-    console.log("\n»»——⍟BLACKSMITH⍟——««");
-    console.log("The smell of hot metal fills the air. Clanking sounds rise from somewhere within the small building. Weapons and armour line the walls.");
-    console.log("1: Return to the cherry blossom gardens");
-    console.log("2: Check status");
-    console.log("Quit game");
 }
 
-//Get the player's input
-let choice = readline.question("\nEnter choice (number): ");
-let choiceNum = parseInt(choice);
-
-//Handling choices
-if(currentLocation === "Cherry Blossom Gardens") {
-    if(choiceNum === 1) {
-        currentLocation = "Blacksmith";
-        console.log("\nYou follow the first path and enter the blacksmith's shop.");
-    } else if(choiceNum === 2) {
-        currentLocation = "Village center";
-        console.log("\nYou follow the second path and enter the village centre.");
-    } else if(choiceNum === 3) {
-        currentLocation = "Your house";
-        console.log("\nYou turn around and enter your house.");
-    } else if(choiceNum === 4) {
-        //Show status
-        console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
-        console.log("Health: " + playerHealth); //insert emoji (start): pink heart
-        console.log("Gold: " + playerGold); //insert emoji (start): coin
-        console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
-    } else if(choiceNum === 5) {
-        console.log("Farewell, traveller.")
-    } else {
-        console.log("\nInvalid choice. Please select a number between 1 - 5.");
-    }
-} else if(currentLocation === "Blacksmith") {
-    if (choiceNum === 1) {
-        currentLocation = "Cherry blossom gardens";
-        console.log("You return to the cherry blossom gardens.");
-    } else if(choiceNum === 2) {
-        //Show status
-        console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
-        console.log("Health: " + playerHealth); //insert emoji (start): pink heart
-        console.log("Gold: " + playerGold); //insert emoji (start): coin
-        console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
-    } else if(choiceNum === 3) {
-        console.log("Farewell, traveller");
-    } else {
-        console.log("\nInvalid choice. Please select a number between 1 - 5.");
-    }
-}
