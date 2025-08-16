@@ -159,6 +159,7 @@ while(gameRunning) {
                 } else {
                     console.log("Empty slot");
                 }
+            } 
         } else if(choiceNum === 4) {
             gameRunning = false;
             console.log("Farewell, traveller.");
@@ -188,6 +189,7 @@ while(gameRunning) {
                 } else {
                     console.log("Empty slot");
                 }
+            } 
         } else if(choiceNum === 4) {
             gameRunning = false;
             console.log("Farewell, traveller.");
@@ -195,5 +197,3 @@ while(gameRunning) {
             console.log("\nInvalid choice. Please select a number between 1 - 5.");
         }
     }
-}
-
