@@ -50,9 +50,6 @@ let hasArmor = false;
 let hasHealingPotion = false;
 
 // ---------------------------
-// Location tracking
-let currentLocation = "Cherry Blossom Gardens";
-let firstVisit = true;
 
 
 //Main game loop
