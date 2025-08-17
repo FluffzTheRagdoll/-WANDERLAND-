@@ -15,11 +15,10 @@ console.log("~ Welcome to WANDERLAND ~");
 console.log("Step into a world where you are tasked with deciding what happens next, as well as navigating your way through different trails and doing whatever you must until you reach your one and only goal.. Ready to get started?"); //Insert emoji: scroll
 
 
-// Starting stats
+// Player stats
 let playerName = "";
 let playerHealth = 100;
 let playerGold = 20;
-let startingLocation = "Cherry Blossom Gardens";
 let inventory = [];
 
 //Player info
@@ -44,6 +43,8 @@ console.log("The healing potion restores: " + healingPotionValue + " health.");
 
 //Game state variables
 let gameRunning = true;
+let currentLocation = true;
+let firstVisit = true;
 let hasWeapon = false;
 let hasArmor = false;
 let hasHealingPotion = false;
@@ -76,6 +77,7 @@ while(gameRunning) {
     } else if(currentLocation === "Blacksmith") {
         console.log("\n»»——⍟BLACKSMITH⍟——««");
         console.log("The smell of hot metal fills the air. Clanking sounds rise from somewhere within the small building. Weapons and armour line the walls.");
+        
         console.log("1: Return to the cherry blossom gardens");
         console.log("2: Check status");
         console.log("3: Check inventory");
@@ -83,6 +85,7 @@ while(gameRunning) {
     } else if(currentLocation === "Village Centre") {
         console.log("_-+°ₒ❀VILLAGE❀ₒ°+-_");
         console.log("You follow the second path to the village centre. There are small houses spread out onto a patch of sandy gravel. Grass surrounds the area, and all is quiet. There are wooden stalls set up in the corners, but one in particular catches your eye.");
+        
         console.log("1: Return to the cherry blossom gardens");
         console.log("2: Check status");
         console.log("3: Check inventory");
@@ -90,11 +93,12 @@ while(gameRunning) {
     } else if(currentLocation === "Your house") {
         console.log("・‥…━━━YOUR HOUSE━━━…‥・");
         console.log("You turn around and enter your house. It's rather small inside, and wooden windows let in sunlight from outside. There is a table and a chair in the centre of the room. Being in here brings back a lot of memories for you...");
+        
         console.log("1: Return to the cherry blossom gardens");
         console.log("2: Check status");
         console.log("3: Check inventory");
         console.log("4: Quit game");
-    
+    }
     //Get the player's input
     choice = readline.question("\nEnter choice (number): ");
     let choiceNum = parseInt(choice);
@@ -123,7 +127,7 @@ while(gameRunning) {
                 if(slot === 1 && hasWeapon) {
                     console.log("Item found: Sword");
                 } else if(slot === 2 && hasArmor) {
-                    console.log("Item found: Sheild");
+                    console.log("Item found: Shield");
                 } else if(slot === 3 && hasHealingPotion) {
                     console.log("Item found: Healing potion");
                 } else {
@@ -153,7 +157,7 @@ while(gameRunning) {
                 if(slot === 1 && hasWeapon) {
                     console.log("Item found: Sword");
                 } else if(slot === 2 && hasArmor) {
-                    console.log("Item found: Sheild");
+                    console.log("Item found: Shield");
                 } else if(slot === 3 && hasHealingPotion) {
                     console.log("Item found: Healing potion");
                 } else {
@@ -183,7 +187,7 @@ while(gameRunning) {
                 if(slot === 1 && hasWeapon) {
                     console.log("Item found: Sword");
                 } else if(slot === 2 && hasArmor) {
-                    console.log("Item found: Sheild");
+                    console.log("Item found: Shield");
                 } else if(slot === 3 && hasHealingPotion) {
                     console.log("Item found: Healing potion");
                 } else {
@@ -197,3 +201,4 @@ while(gameRunning) {
             console.log("\nInvalid choice. Please select a number between 1 - 5.");
         }
     }
+}
