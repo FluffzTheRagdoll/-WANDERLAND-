@@ -99,8 +99,26 @@ while(gameRunning) {
     //Get the player's input
     choice = readline.question("\nEnter choice (number): ");
     let choiceNum = parseInt(choice);
-    
-    //Handling choices
+
+    //Get and validate the player's choice
+    let validateChoice = false;
+    while(!validateChoice) {
+        try {
+            let choice = readline.question("\nWhat will you choose to do? ");
+
+            //Check if input is empty
+            if(choice.trim() === "") {
+                throw "Please enter a number.";
+            }
+
+            //Convert the input to a number
+            let choiceNum = parseInt(choice);
+            if(isNaN(choiceNum)) {
+                throw "The input you entered is not a number, it seems! Please enter a number instead.");
+            }
+            validChoice = true; //Valid choice made
+
+            //Handling choices
     if(currentLocation === "Cherry Blossom Gardens") {
         if(choiceNum === 1) {
             currentLocation = "Blacksmith";
@@ -196,6 +214,8 @@ while(gameRunning) {
             console.log("Farewell, traveller.");
         } else {
             console.log("\nInvalid choice. Please select a number between 1 - 5.");
+        }
+    }
         }
     }
 }
