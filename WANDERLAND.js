@@ -114,116 +114,130 @@ while(gameRunning) {
             //Convert the input to a number
             let choiceNum = parseInt(choice);
             if(isNaN(choiceNum)) {
-                throw "The input you entered is not a number, it seems! Please enter a number instead.");
+                throw "The input you entered is not a number, it seems! Please enter a number instead.";
             }
 
-            //Check if a correct number has been entered
+            //Handling choices based on location
             if(currentLocation === "Cherry Blossom Gardens") {
                 if(choiceNum < 1 || choiceNum > 6) {
-                    throw "Please enter a number between 1 and 6.";
+                    throw "Please enter a number between 1 and 6."
                 }
 
                 validChoice = true; //Valid choice made
+
+                if(choiceNum === 1) {
+                    currentLocation = "Blacksmith";
+                    console.log("\nYou follow the first path and enter the blacksmith's shop.");
+                } else if(choiceNum === 2) {
+                    currentLocation = "Village Centre";
+                    console.log("\nYou follow the second path and enter the village centre.");
+                } else if(choiceNum === 3) {
+                    currentLocation = "Your house";
+                    console.log("\nYou turn around and enter your house.");
+                } else if(choiceNum === 4) {
+                    //Show status
+                    console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
+                    console.log("Health: " + playerHealth); //insert emoji (start): pink heart
+                    console.log("Gold: " + playerGold); //insert emoji (start): coin
+                    console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
+                } else if(choiceNum === 5) {
+                    // Inventory check
+                    for (let slot = 1; slot <= 3; slot++) {
+                        console.log("Checking item slot " + slot + "...");
+                        if(slot === 1 && hasWeapon) {
+                            console.log("Item found: Sword");
+                        } else if(slot === 2 && hasArmor) {
+                            console.log("Item found: Shield");
+                        } else if(slot === 3 && hasHealingPotion) {
+                            console.log("Item found: Healing potion");
+                        } else {
+                            console.log("Empty slot");
+                        }
+                    }
+                } else if(choiceNum === 6) {
+                    gameRunning = false;
+                    console.log("Farewell, traveller.")
+                } else {
+                    console.log("\nInvalid choice. Please select a number between 1 - 6.");
+                }
+            } else if(currentLocation === "Blacksmith") {
+                if(choiceNum < 1 || choiceNum > 4) {
+                    throw "Please enter a number between 1 and 4.";
+                }
+
+                validChoice = true; //Valid choice made
+
+                if (choiceNum === 1) {
+                    currentLocation = "Cherry Blossom Gardens";
+                    console.log("You return to the cherry blossom gardens.");
+                } else if(choiceNum === 2) {
+                    //Show status
+                    console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
+                    console.log("Health: " + playerHealth); //insert emoji (start): pink heart
+                    console.log("Gold: " + playerGold); //insert emoji (start): coin
+                    console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
+                } else if(choiceNum === 3) {
+                    // Inventory check
+                    for (let slot = 1; slot <= 3; slot++) {
+                        console.log("Checking item slot " + slot + "...");
+                        if(slot === 1 && hasWeapon) {
+                            console.log("Item found: Sword");
+                        } else if(slot === 2 && hasArmor) {
+                            console.log("Item found: Shield");
+                        } else if(slot === 3 && hasHealingPotion) {
+                            console.log("Item found: Healing potion");
+                        } else {
+                            console.log("Empty slot");
+                        }
+                    } 
+                } else if(choiceNum === 4) {
+                    gameRunning = false;
+                    console.log("Farewell, traveller.");
+                }
+            } else if(currentLocation === "Village Centre") {
+                if(choiceNum < 1 || choiceNum > 4){
+                    throw "Please enter a number between 1 and 4.";
+                }
+
+                validChoice = true; //Valid choice made
+
+                if (choiceNum === 1) {
+                    currentLocation = "Cherry Blossom Gardens";
+                    console.log("You return to the cherry blossom gardens.");
+                } else if(choiceNum === 2) {
+                    //Show status
+                    console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
+                    console.log("Health: " + playerHealth); //insert emoji (start): pink heart
+                    console.log("Gold: " + playerGold); //insert emoji (start): coin
+                    console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
+                } else if(choiceNum === 3) {
+                    // Inventory check
+                    for (let slot = 1; slot <= 3; slot++) {
+                        console.log("Checking item slot " + slot + "...");
+                        if(slot === 1 && hasWeapon) {
+                            console.log("Item found: Sword");
+                        } else if(slot === 2 && hasArmor) {
+                            console.log("Item found: Shield");
+                        } else if(slot === 3 && hasHealingPotion) {
+                            console.log("Item found: Healing potion");
+                        } else {
+                            console.log("Empty slot");
+                        }
+                    } 
+                } else if(choiceNum === 4) {
+                    gameRunning = false;
+                    console.log("Farewell, traveller.");
+                }
             }
 
-                //Handling choices
-        if(currentLocation === "Cherry Blossom Gardens") {
-            if(choiceNum === 1) {
-                currentLocation = "Blacksmith";
-                console.log("\nYou follow the first path and enter the blacksmith's shop.");
-            } else if(choiceNum === 2) {
-                currentLocation = "Village Centre";
-                console.log("\nYou follow the second path and enter the village centre.");
-            } else if(choiceNum === 3) {
-                currentLocation = "Your house";
-                console.log("\nYou turn around and enter your house.");
-            } else if(choiceNum === 4) {
-                //Show status
-                console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
-                console.log("Health: " + playerHealth); //insert emoji (start): pink heart
-                console.log("Gold: " + playerGold); //insert emoji (start): coin
-                console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
-            } else if(choiceNum === 5) {
-                // Inventory check
-                for (let slot = 1; slot <= 3; slot++) {
-                    console.log("Checking item slot " + slot + "...");
-                    if(slot === 1 && hasWeapon) {
-                        console.log("Item found: Sword");
-                    } else if(slot === 2 && hasArmor) {
-                        console.log("Item found: Shield");
-                    } else if(slot === 3 && hasHealingPotion) {
-                        console.log("Item found: Healing potion");
-                    } else {
-                        console.log("Empty slot");
-                    }
-                }
-            } else if(choiceNum === 6) {
-                gameRunning = false;
-                console.log("Farewell, traveller.")
-            } else {
-                console.log("\nInvalid choice. Please select a number between 1 - 6.");
-            }
-        } else if(currentLocation === "Blacksmith") {
-            if (choiceNum === 1) {
-                currentLocation = "Cherry Blossom Gardens";
-                console.log("You return to the cherry blossom gardens.");
-            } else if(choiceNum === 2) {
-                //Show status
-                console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
-                console.log("Health: " + playerHealth); //insert emoji (start): pink heart
-                console.log("Gold: " + playerGold); //insert emoji (start): coin
-                console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
-            } else if(choiceNum === 3) {
-                // Inventory check
-                for (let slot = 1; slot <= 3; slot++) {
-                    console.log("Checking item slot " + slot + "...");
-                    if(slot === 1 && hasWeapon) {
-                        console.log("Item found: Sword");
-                    } else if(slot === 2 && hasArmor) {
-                        console.log("Item found: Shield");
-                    } else if(slot === 3 && hasHealingPotion) {
-                        console.log("Item found: Healing potion");
-                    } else {
-                        console.log("Empty slot");
-                    }
-                } 
-            } else if(choiceNum === 4) {
-                gameRunning = false;
-                console.log("Farewell, traveller.");
-            } else {
-                console.log("\nInvalid choice. Please select a number between 1 - 4.");
-            }
-        } else if(currentLocation === "Village Centre") {
-            if (choiceNum === 1) {
-                currentLocation = "Cherry Blossom Gardens";
-                console.log("You return to the cherry blossom gardens.");
-            } else if(choiceNum === 2) {
-                //Show status
-                console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
-                console.log("Health: " + playerHealth); //insert emoji (start): pink heart
-                console.log("Gold: " + playerGold); //insert emoji (start): coin
-                console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
-            } else if(choiceNum === 3) {
-                // Inventory check
-                for (let slot = 1; slot <= 3; slot++) {
-                    console.log("Checking item slot " + slot + "...");
-                    if(slot === 1 && hasWeapon) {
-                        console.log("Item found: Sword");
-                    } else if(slot === 2 && hasArmor) {
-                        console.log("Item found: Shield");
-                    } else if(slot === 3 && hasHealingPotion) {
-                        console.log("Item found: Healing potion");
-                    } else {
-                        console.log("Empty slot");
-                    }
-                } 
-            } else if(choiceNum === 4) {
-                gameRunning = false;
-                console.log("Farewell, traveller.");
-            } else {
-                console.log("\nInvalid choice. Please select a number between 1 - 4.");
-            }
+        }  catch(error) {
+            console.log("\nError: " + error);
+            console.log("\nPlease try that again!");
         }
     }
+
+    //Check if the player died
+    if(playerHealth <= 0) {
+        console.log("\nYou... died. Farewell traveller, until another time.") //Insert emoji: wings
     }
 }
