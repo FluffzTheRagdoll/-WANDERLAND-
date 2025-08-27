@@ -8,18 +8,17 @@ The player will be able to choose their own path and the story and ending will c
 based on their decisions.
 */
 
-// Display the game title
-console.log("~ Welcome to WANDERLAND ~");
-
-// Add a welcome message
-console.log("Step into a world where you are tasked with deciding what happens next, as well as navigating your way through different trails and doing whatever you must until you reach your one and only goal.. Ready to get started?"); //Insert emoji: scroll
-
-
 // Player stats
 let playerName = "";
 let playerHealth = 100;
 let playerGold = 20;
 let inventory = [];
+
+// Display the game title
+console.log("~ Welcome to WANDERLAND ~");
+
+// Add a welcome message
+console.log("Step into a world where you are tasked with deciding what happens next, as well as navigating your way through different trails and doing whatever you must until you reach your one and only goal.. Ready to get started?"); //Insert emoji: scroll
 
 //Player info
 playerName = readline.question("\nWhat's your name? Every trekker needs something to be known by...");
@@ -96,9 +95,6 @@ while(gameRunning) {
         console.log("3: Check inventory");
         console.log("4: Quit game");
     }
-    //Get the player's input
-    choice = readline.question("\nEnter choice (number): ");
-    let choiceNum = parseInt(choice);
 
     //Get and validate the player's choice
     let validChoice = false;
