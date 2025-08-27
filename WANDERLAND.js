@@ -42,7 +42,7 @@ console.log("The healing potion restores: " + healingPotionValue + " health.");
 
 //Game state variables
 let gameRunning = true;
-let currentLocation = true;
+let currentLocation = "Cherry Blossom Gardens";
 let firstVisit = true;
 let hasWeapon = false;
 let hasArmor = false;
