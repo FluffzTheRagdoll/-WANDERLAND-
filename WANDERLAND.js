@@ -54,7 +54,7 @@ let hasHealingPotion = false;
 //Main game loop
 while(gameRunning) {
     // Location checking and displaying the relevant information
-    if(currentLocation = "Cherry Blossom Gardens") {
+    if(currentLocation === "Cherry Blossom Gardens") {
         console.log("\n:..✿ ∞CHERRY BLOSSOM GARDENS∞ ✿..:");
         console.log("You're in a quiet, serene garden with cherry blossom trees on either side of the sandy gravel path you're standing on. The path forks ahead into two.");
 
