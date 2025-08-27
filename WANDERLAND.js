@@ -224,6 +224,40 @@ while(gameRunning) {
                     gameRunning = false;
                     console.log("Farewell, traveller.");
                 }
+            } else if(currentLocation === "Your house") {
+                if(choiceNum < 1 || choiceNum > 4) {
+                    throw "Please enter a number between 1 and 4";
+                }
+
+                validChoice = true; //Valid choice made
+
+                if(choiceNum === 1) {
+                    currentLocation = "Cherry Blossom Gardens";
+                    console.log("You return to the cherry blossom gardens.");
+                } else if(choiceNum === 2) {
+                    //Show status
+                    console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
+                    console.log("Health: " + playerHealth); //insert emoji (start): pink heart
+                    console.log("Gold: " + playerGold); //insert emoji (start): coin
+                    console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
+                } else if(choiceNum === 3) {
+                    // Inventory check
+                    for (let slot = 1; slot <= 3; slot++) {
+                        console.log("Checking item slot " + slot + "...");
+                        if(slot === 1 && hasWeapon) {
+                            console.log("Item found: Sword");
+                        } else if(slot === 2 && hasArmor) {
+                            console.log("Item found: Shield");
+                        } else if(slot === 3 && hasHealingPotion) {
+                            console.log("Item found: Healing potion");
+                        } else {
+                            console.log("Empty slot");
+                        }
+                    } 
+                } else if(choiceNum === 4) {
+                    gameRunning = false;
+                    console.log("Farwell, traveller.");
+                }
             }
 
         }  catch(error) {
