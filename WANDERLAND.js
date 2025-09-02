@@ -48,12 +48,17 @@ let hasWeapon = false;
 let hasArmor = false;
 let hasHealingPotion = false;
 
-// ---------------------------
+//Function for showing player stats
+function showStatus() {
+    //Show status
+    console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
+    console.log("Health: " + playerHealth); //insert emoji (start): pink heart
+    console.log("Gold: " + playerGold); //insert emoji (start): coin
+    console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
+}
 
-
-//Main game loop
-while(gameRunning) {
-    // Location checking and displaying the relevant information
+//Function for displaying location description and available choices
+function showLocation() {
     if(currentLocation === "Cherry Blossom Gardens") {
         console.log("\n:..✿ ∞CHERRY BLOSSOM GARDENS∞ ✿..:");
         console.log("You're in a quiet, serene garden with cherry blossom trees on either side of the sandy gravel path you're standing on. The path forks ahead into two.");
@@ -95,7 +100,43 @@ while(gameRunning) {
         console.log("3: Check inventory");
         console.log("4: Quit game");
     }
+}
 
+//Function for movement between locations
+function move(choiceNum) {
+    let validMove = false;
+    if(currentLocation === "Cherry Blossom Gardens") {
+        if(choiceNum === 1) {
+            currentLocation = "Blacksmith";
+            console.log("\nYou follow the first path and enter the blacksmith's shop.");
+            validMove = true;
+        } else if(choiceNum === 2) {
+            currentLocation = "Village Centre";
+            console.log("\nYou follow the second path and enter the village centre.");
+            validMove = true;
+        } else if(choiceNum === 3) {
+            currentLocation = "Your house";
+            console.log("\nYou turn around and enter your house.");
+            validMove = true;
+        }
+    } else if(currentLocation === "Blacksmith" || currentLocation === "Village Centre" || currentLocation === "Your house") {
+        if(choiceNum === 1) {
+            currentLocation = "Cherry Blossom Gardens";
+            console.log("You return to the cherry blossom gardens.");
+            validMove = true;
+        }
+    }
+
+return validMove;    
+}
+// ---------------------------
+
+
+//Main game loop
+while(gameRunning) {
+    // Location checking and displaying the relevant information
+    showLocation();
+    
     //Get and validate the player's choice
     let validChoice = false;
     while(!validChoice) {
@@ -116,26 +157,17 @@ while(gameRunning) {
             //Handling choices based on location
             if(currentLocation === "Cherry Blossom Gardens") {
                 if(choiceNum < 1 || choiceNum > 6) {
-                    throw "Please enter a number between 1 and 6."
+                    throw "Please enter a number between 1 and 6.";
                 }
 
                 validChoice = true; //Valid choice made
 
-                if(choiceNum === 1) {
-                    currentLocation = "Blacksmith";
-                    console.log("\nYou follow the first path and enter the blacksmith's shop.");
-                } else if(choiceNum === 2) {
-                    currentLocation = "Village Centre";
-                    console.log("\nYou follow the second path and enter the village centre.");
-                } else if(choiceNum === 3) {
-                    currentLocation = "Your house";
-                    console.log("\nYou turn around and enter your house.");
+                if(choiceNum <= 3) {
+                    if(!move(choiceNum)) {
+                        console.log("\nYou can't go there...");
+                    }
                 } else if(choiceNum === 4) {
-                    //Show status
-                    console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
-                    console.log("Health: " + playerHealth); //insert emoji (start): pink heart
-                    console.log("Gold: " + playerGold); //insert emoji (start): coin
-                    console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
+                    showStatus();
                 } else if(choiceNum === 5) {
                     // Inventory check
                     for (let slot = 1; slot <= 3; slot++) {
@@ -164,14 +196,11 @@ while(gameRunning) {
                 validChoice = true; //Valid choice made
 
                 if (choiceNum === 1) {
-                    currentLocation = "Cherry Blossom Gardens";
-                    console.log("You return to the cherry blossom gardens.");
+                    if(!move(choiceNum)) {
+                        console.log("You can't go there...");
+                    }
                 } else if(choiceNum === 2) {
-                    //Show status
-                    console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
-                    console.log("Health: " + playerHealth); //insert emoji (start): pink heart
-                    console.log("Gold: " + playerGold); //insert emoji (start): coin
-                    console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
+                    showStatus();
                 } else if(choiceNum === 3) {
                     // Inventory check
                     for (let slot = 1; slot <= 3; slot++) {
@@ -189,6 +218,8 @@ while(gameRunning) {
                 } else if(choiceNum === 4) {
                     gameRunning = false;
                     console.log("Farewell, traveller.");
+                }  else {
+                    console.log("\nInvalid choice. Please select a number between 1 - 4.");
                 }
             } else if(currentLocation === "Village Centre") {
                 if(choiceNum < 1 || choiceNum > 4){
@@ -196,16 +227,12 @@ while(gameRunning) {
                 }
 
                 validChoice = true; //Valid choice made
-
-                if (choiceNum === 1) {
-                    currentLocation = "Cherry Blossom Gardens";
-                    console.log("You return to the cherry blossom gardens.");
+                if(choiceNum === 1) {
+                    if(!move(choiceNum)) {
+                        console.log("You can't go there...");
+                    }
                 } else if(choiceNum === 2) {
-                    //Show status
-                    console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
-                    console.log("Health: " + playerHealth); //insert emoji (start): pink heart
-                    console.log("Gold: " + playerGold); //insert emoji (start): coin
-                    console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
+                    showStatus();
                 } else if(choiceNum === 3) {
                     // Inventory check
                     for (let slot = 1; slot <= 3; slot++) {
@@ -223,6 +250,8 @@ while(gameRunning) {
                 } else if(choiceNum === 4) {
                     gameRunning = false;
                     console.log("Farewell, traveller.");
+                }  else {
+                    console.log("\nInvalid choice. Please select a number between 1 - 4.");
                 }
             } else if(currentLocation === "Your house") {
                 if(choiceNum < 1 || choiceNum > 4) {
@@ -235,11 +264,7 @@ while(gameRunning) {
                     currentLocation = "Cherry Blossom Gardens";
                     console.log("You return to the cherry blossom gardens.");
                 } else if(choiceNum === 2) {
-                    //Show status
-                    console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
-                    console.log("Health: " + playerHealth); //insert emoji (start): pink heart
-                    console.log("Gold: " + playerGold); //insert emoji (start): coin
-                    console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
+                    showStatus();
                 } else if(choiceNum === 3) {
                     // Inventory check
                     for (let slot = 1; slot <= 3; slot++) {
@@ -256,7 +281,9 @@ while(gameRunning) {
                     } 
                 } else if(choiceNum === 4) {
                     gameRunning = false;
-                    console.log("Farwell, traveller.");
+                    console.log("Farewell, traveller.");
+                }  else {
+                    console.log("\nInvalid choice. Please select a number between 1 - 4.");
                 }
             }
 
@@ -264,10 +291,10 @@ while(gameRunning) {
             console.log("\nError: " + error);
             console.log("\nPlease try that again!");
         }
-    }
 
-    //Check if the player died
-    if(playerHealth <= 0) {
-        console.log("\nYou... died. Farewell traveller, until another time.") //Insert emoji: wings
+        //Check if the player died
+        if(playerHealth <= 0) {
+            console.log("\nYou... died. Farewell traveller, until another time.") //Insert emoji: wings
+        }
     }
 }
