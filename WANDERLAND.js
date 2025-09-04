@@ -129,6 +129,44 @@ function move(choiceNum) {
 
 return validMove;    
 }
+
+//Function for updating player health
+function updateHealth(amount) {
+    playerHealth += amount;
+
+    if(amount <= 100) {
+        playerHealth = 100;
+        console.log("You're at full health again.");
+    }
+
+    if(amount <= 0) {
+        playerHealth = 0;
+        console.log("Your health reached zero...")
+        console.log("\nLooks like that's the end of things.")
+    }
+
+    console.log("Your health is now: " + playerHealth);
+    return playerHealth;
+}
+
+function showInventory() {
+    console.log("·•– ٠⚘ INVENTORY  ⚘٠ —•·");
+    for (let slot = 1; slot <= 3; slot++) {
+        console.log("Checking item slot " + slot + "...");
+        if(slot === 1 && hasWeapon) {
+            console.log("Item found: Sword");
+        } else if(slot === 2 && hasArmor) {
+            console.log("Item found: Shield");
+        } else if(slot === 3 && hasHealingPotion) {
+            console.log("Item found: Healing potion");
+        } else {
+            console.log("Empty slot");
+        }
+    }
+    if(!hasWeapon && !hasArmor && !hasHealingPotion) {
+        console.log("Your inventory is empty. It seems as if you are rather unprepared for this journey...");
+    }
+}
 // ---------------------------
 
 
@@ -170,18 +208,7 @@ while(gameRunning) {
                     showStatus();
                 } else if(choiceNum === 5) {
                     // Inventory check
-                    for (let slot = 1; slot <= 3; slot++) {
-                        console.log("Checking item slot " + slot + "...");
-                        if(slot === 1 && hasWeapon) {
-                            console.log("Item found: Sword");
-                        } else if(slot === 2 && hasArmor) {
-                            console.log("Item found: Shield");
-                        } else if(slot === 3 && hasHealingPotion) {
-                            console.log("Item found: Healing potion");
-                        } else {
-                            console.log("Empty slot");
-                        }
-                    }
+                    showInventory();
                 } else if(choiceNum === 6) {
                     gameRunning = false;
                     console.log("Farewell, traveller.")
@@ -203,18 +230,7 @@ while(gameRunning) {
                     showStatus();
                 } else if(choiceNum === 3) {
                     // Inventory check
-                    for (let slot = 1; slot <= 3; slot++) {
-                        console.log("Checking item slot " + slot + "...");
-                        if(slot === 1 && hasWeapon) {
-                            console.log("Item found: Sword");
-                        } else if(slot === 2 && hasArmor) {
-                            console.log("Item found: Shield");
-                        } else if(slot === 3 && hasHealingPotion) {
-                            console.log("Item found: Healing potion");
-                        } else {
-                            console.log("Empty slot");
-                        }
-                    } 
+                    showInventory();
                 } else if(choiceNum === 4) {
                     gameRunning = false;
                     console.log("Farewell, traveller.");
@@ -235,18 +251,7 @@ while(gameRunning) {
                     showStatus();
                 } else if(choiceNum === 3) {
                     // Inventory check
-                    for (let slot = 1; slot <= 3; slot++) {
-                        console.log("Checking item slot " + slot + "...");
-                        if(slot === 1 && hasWeapon) {
-                            console.log("Item found: Sword");
-                        } else if(slot === 2 && hasArmor) {
-                            console.log("Item found: Shield");
-                        } else if(slot === 3 && hasHealingPotion) {
-                            console.log("Item found: Healing potion");
-                        } else {
-                            console.log("Empty slot");
-                        }
-                    } 
+                    showInventory();
                 } else if(choiceNum === 4) {
                     gameRunning = false;
                     console.log("Farewell, traveller.");
@@ -267,18 +272,7 @@ while(gameRunning) {
                     showStatus();
                 } else if(choiceNum === 3) {
                     // Inventory check
-                    for (let slot = 1; slot <= 3; slot++) {
-                        console.log("Checking item slot " + slot + "...");
-                        if(slot === 1 && hasWeapon) {
-                            console.log("Item found: Sword");
-                        } else if(slot === 2 && hasArmor) {
-                            console.log("Item found: Shield");
-                        } else if(slot === 3 && hasHealingPotion) {
-                            console.log("Item found: Healing potion");
-                        } else {
-                            console.log("Empty slot");
-                        }
-                    } 
+                    showInventory();
                 } else if(choiceNum === 4) {
                     gameRunning = false;
                     console.log("Farewell, traveller.");
