@@ -10,7 +10,6 @@ With a touch of whimsy
 let playerName = "";
 let playerHealth = 100;
 let playerGold = 20;
-let inventory = [];
 
 // Display the game title
 console.log("~ Welcome to WANDERLAND ~");
@@ -22,7 +21,6 @@ console.log("Step into a world where you are tasked with deciding what happens n
 playerName = readline.question("\nWhat's your name? Every trekker needs something to be known by...");
 console.log("\nWelcome, " + playerName + "!");
 console.log("\nYou start with " + playerGold + " gold. Good luck with your journey!");
-console.log("");
 
 // Weapon info
 let weaponDamage = 0;
@@ -42,9 +40,9 @@ console.log("The healing potion restores: " + healingPotionValue + " health.");
 let gameRunning = true;
 let currentLocation = "Cherry Blossom Gardens";
 let firstVisit = true;
-let hasWeapon = false;
-let hasArmor = false;
-let hasHealingPotion = false;
+
+//Using an array as an inventory
+let inventory = [];
 
 /*-----DISPLAYING INFORMATION TO THE PLAYER-----
 */
@@ -180,15 +178,20 @@ return validMove;
 
 // Function for using items
 function useItem() {
-    if(hasHealingPotion) {
+    if(inventory.includes("Healing potion")) {
         console.log("You inspect the healing potion for a second before drinking it. Suddenly, you feel better.");
         updateHealth(30);
-        hasHealingPotion = false;
+        
+        //Removing healing potion from inventory after use with splice instead of setting hasHealingPotion to false
+        let potionIndex = inventory.indexOf("Healing potion");
+        inventory.splice(potionIndex, 1);
+
         return true;
     }
     console.log("You don't have any usable items. It would be a good idea to try and find something...");
     return false;
 }
+
 
 /*-----HANDLING CORE GAMEPLAY FUNCTIONS-----
 */
@@ -196,20 +199,12 @@ function useItem() {
 //Displaying inventory
 function showInventory() {
     console.log("·•– ٠⚘ INVENTORY  ⚘٠ —•·");
-    for (let slot = 1; slot <= 3; slot++) {
-        console.log("Checking item slot " + slot + "...");
-        if(slot === 1 && hasWeapon) {
-            console.log("Item found: Sword");
-        } else if(slot === 2 && hasArmor) {
-            console.log("Item found: Shield");
-        } else if(slot === 3 && hasHealingPotion) {
-            console.log("Item found: Healing potion");
-        } else {
-            console.log("Empty slot");
-        }
-    }
-    if(!hasWeapon && !hasArmor && !hasHealingPotion) {
-        console.log("Your inventory is empty. It seems as if you are rather unprepared for this journey...");
+    if(inventory.length === 0) {
+        console.log("Your inventory is empty. It seems as if you're rather unprepared for this journey...");
+    } else {
+        inventory.forEach((item, index) => {
+            console.log("   " + (index + 1) + ". " + item);
+        });
     }
 }
 
@@ -237,13 +232,20 @@ function updateHealth(amount) {
 
 //Function for buying items at the blacksmith
 function buyFromBlacksmith() {
-    if(playerGold >= 10) {
+    if(inventory.includes("Sword")) {
+        console.log("You already have a sword.");
+    }
+
+    if(playerGold >= 10 && !inventory.includes("Sword")) {
         console.log("A faint whispering floats around in the air, grabbing your attention. 'This way.' It tells you. You turn around to see a long sword with a decorated grip. A strange glow surrounds the sword. 'Take it. You'll need it...' The voice says. Then, out of the darkness, a rather frail man, around forty in age, walks over to you. 'Want the sword?' He asks, then notices your rather shocked expression. 'Oh. Don't mind the spirits. They like to hang around here.' the man hands you the sword.");
         playerGold -= 10;
-        hasWeapon = true;
+        
+        //Add weapon to inventory using push instead of setting hasWeapon to true
+        inventory.push("Sword")
+
         console.log("\nYou buy the sword for 10 gold.");
         console.log("Gold remaining: " + playerGold);
-    } else {
+    } else if(playerGold <= 10 && !inventory.includes("Sword")) {
         console.log("The blacksmith walks out of the darkness and over to you. 'You don't have enough gold, it seems.' He says. 'Come back when you have enough. Can't throw this beauty away for nothing, you know.'");
     }
 }
@@ -253,7 +255,10 @@ function buyFromVillageStalls() {
     if(playerGold >= 8) {
         console.log("You wait, but no one seems to be there at the stall. Finally, you decide to buy the potion anyway. You leave the gold at the stall, and take the healing potion.");
         playerGold -= 8;
-        hasHealingPotion = true;
+        
+        //Add healing potion to inventory using push instead of setting hasHealingPotion to true
+        inventory.push("Healing potion");
+
         console.log("\nYou buy the healing potion for 8 gold.");
         console.log("Gold remaining: " + playerGold);
     } else {
