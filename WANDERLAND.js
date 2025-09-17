@@ -22,20 +22,6 @@ playerName = readline.question("\nWhat's your name? Every trekker needs somethin
 console.log("\nWelcome, " + playerName + "!");
 console.log("\nYou start with " + playerGold + " gold. Good luck with your journey!");
 
-// Weapon info
-let weaponDamage = 0;
-console.log("Your weapon currently does: " + weaponDamage + " damage.");
-console.log("Upon buying a sword, the damage caused by your weapon will increase to 10.");
-
-// Monster stats
-let monsterDefense = 5;
-console.log("Monsters start with: " + monsterDefense + " health.");
-console.log("Monsters can withstand more damage in combat. You'll need to be tactful when fighting them.");
-
-//Healing potion restoration
-let healingPotionValue = 30;
-console.log("The healing potion restores: " + healingPotionValue + " health.");
-
 //Game state variables
 let gameRunning = true;
 let currentLocation = "Cherry Blossom Gardens";
@@ -43,6 +29,27 @@ let firstVisit = true;
 
 //Using an array as an inventory
 let inventory = [];
+
+//Defining items as objects
+const healingPotion = {
+    name: "Healing potion",
+    type: "potion",
+    cost: 8,
+    effect: 30,    //Healing amount
+    description: "Restores 30 health"
+};
+
+let healingPotionString = "Healing potion"; //For checking if the potion is present in inventory
+
+const sword = {
+    name: "Sword",
+    type: "weapon",
+    cost: 10,
+    effect: 10,    //Damage amount
+    description: "Needed for battles, but not necessary..."
+};
+
+let swordString = "Sword"; //For checking if the sword is present in inventory
 
 /*-----DISPLAYING INFORMATION TO THE PLAYER-----
 */
@@ -178,18 +185,43 @@ return validMove;
 
 // Function for using items
 function useItem() {
-    if(inventory.includes("Healing potion")) {
-        console.log("You inspect the healing potion for a second before drinking it. Suddenly, you feel better.");
-        updateHealth(30);
-        
-        //Removing healing potion from inventory after use with splice instead of setting hasHealingPotion to false
-        let potionIndex = inventory.indexOf("Healing potion");
-        inventory.splice(potionIndex, 1);
-
+    if(inventory.length === 0) {
+        console.log("You don't have any usable items. It would be a good idea to try and find something...");
         return true;
     }
-    console.log("You don't have any usable items. It would be a good idea to try and find something...");
+
+    console.log("\n·•– ٠⚘ INVENTORY  ⚘٠ —•·");
+    inventory.forEach((item, index) => {
+        console.log("   " + (index + 1) + ". " + item.name);
+    });
+
+    let choice = readline.question("Which item do you wish to use? (Enter a number or 'cancel' if you change your mind.");
+    if(choice === 'cancel') return false;
+
+    let index = parseInt(choice) - 1;
+    if(index >= 0 && index < inventory.length) {
+        let item = inventory[index];
+
+        if(item.type === "potion") {
+            console.log("\nYou inspect the " + item.name + " for a second before drinking it. Suddenly, you feel better.");
+            updateHealth(item.effect);
+            inventory.splice(index, 1);
+            return true;
+        }
+
+        if(item.type === "weapon") {
+            console.log("\nYou can use your " + item.name + " in battle.");
+            return true;
+        }
+    } else {
+        console.log("Invalid item number.");
+    }
+
     return false;
+}
+
+function hasItemType(type) {
+    return inventory.some(item => item.type === type);
 }
 
 
@@ -203,7 +235,7 @@ function showInventory() {
         console.log("Your inventory is empty. It seems as if you're rather unprepared for this journey...");
     } else {
         inventory.forEach((item, index) => {
-            console.log("   " + (index + 1) + ". " + item);
+            console.log("   " + (index + 1) + ". " + item.name + " - " + item.description);
         });
     }
 }
@@ -232,36 +264,40 @@ function updateHealth(amount) {
 
 //Function for buying items at the blacksmith
 function buyFromBlacksmith() {
-    if(inventory.includes("Sword")) {
+    if(inventory.some(item => item.name === swordString)) {
         console.log("You already have a sword.");
     }
 
-    if(playerGold >= 10 && !inventory.includes("Sword")) {
+    if(playerGold >= 10 && !inventory.some(item => item.name === swordString)) {
         console.log("A faint whispering floats around in the air, grabbing your attention. 'This way.' It tells you. You turn around to see a long sword with a decorated grip. A strange glow surrounds the sword. 'Take it. You'll need it...' The voice says. Then, out of the darkness, a rather frail man, around forty in age, walks over to you. 'Want the sword?' He asks, then notices your rather shocked expression. 'Oh. Don't mind the spirits. They like to hang around here.' the man hands you the sword.");
-        playerGold -= 10;
+        playerGold -= sword.cost;
         
-        //Add weapon to inventory using push instead of setting hasWeapon to true
-        inventory.push("Sword")
+        //Add weapon object to inventory instead of just the name
+        inventory.push({...sword}); 
 
-        console.log("\nYou buy the sword for 10 gold.");
+        console.log("\nYou buy the " + sword.name + " for " + sword.cost + " gold.");
         console.log("Gold remaining: " + playerGold);
-    } else if(playerGold <= 10 && !inventory.includes("Sword")) {
+    } else if(playerGold <= 10 && !inventory.some(item => item.name === swordString)) {
         console.log("The blacksmith walks out of the darkness and over to you. 'You don't have enough gold, it seems.' He says. 'Come back when you have enough. Can't throw this beauty away for nothing, you know.'");
     }
 }
 
 //Function for buying items at the stalls in the village centre
 function buyFromVillageStalls() {
-    if(playerGold >= 8) {
-        console.log("You wait, but no one seems to be there at the stall. Finally, you decide to buy the potion anyway. You leave the gold at the stall, and take the healing potion.");
-        playerGold -= 8;
-        
-        //Add healing potion to inventory using push instead of setting hasHealingPotion to true
-        inventory.push("Healing potion");
+    if(inventory.some(item => item.name === healingPotionString)) {
+        console.log("You already have a healing potion. You feel it unneeded to buy another one right now. Might as well use up your current potion first...");
+    }
 
-        console.log("\nYou buy the healing potion for 8 gold.");
+    if(playerGold >= 8 && !inventory.some(item => item.name === healingPotionString)) {
+        console.log("You wait, but no one seems to be there at the stall. Finally, you decide to buy the potion anyway. You leave the gold at the stall, and take the healing potion.");
+        playerGold -= healingPotion.cost;
+        
+        //Add healing potion object to inventory instead of just the name
+        inventory.push({...healingPotion});
+
+        console.log("\nYou buy the " + healingPotion.name + " for " + healingPotion.cost + " gold.");
         console.log("Gold remaining: " + playerGold);
-    } else {
+    } else if( playerGold <= 8 && !inventory.some(item => item.name === healingPotionString)) {
         console.log("You don't have enough gold to buy the potion. You feel it would be wrong to take it without paying, so you leave the magic mixture alone. You think, 'Perhaps I can come back later when the seller is here. Then I could haggle a bit...'");
     }
 }
