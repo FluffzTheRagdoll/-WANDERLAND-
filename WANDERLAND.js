@@ -17,25 +17,25 @@ console.log("~ Welcome to WANDERLAND ~");
 // Add a welcome message
 console.log("Step into a world where you are tasked with deciding what happens next, as well as navigating your way through different trails and doing whatever you must until you reach your one and only goal.. Ready to get started?"); //Insert emoji: scroll
 
-//Player info
+// Player info
 playerName = readline.question("\nWhat's your name? Every trekker needs something to be known by...");
 console.log("\nWelcome, " + playerName + "!");
 console.log("\nYou start with " + playerGold + " gold. Good luck with your journey!");
 
-//Game state variables
+// Game state variables
 let gameRunning = true;
 let currentLocation = "Cherry Blossom Gardens";
 let firstVisit = true;
 
-//Using an array as an inventory
+// Using an array as an inventory
 let inventory = [];
 
-//Defining items as objects
+// Defining items as objects
 const healingPotion = {
     name: "Healing potion",
     type: "potion",
     cost: 8,
-    effect: 30,    //Healing amount
+    effect: 30,    // Healing amount
     description: "Restores 30 health"
 };
 
@@ -45,7 +45,7 @@ const sword = {
     name: "Sword",
     type: "weapon",
     cost: 10,
-    effect: 10,    //Damage amount
+    effect: 10,    // Damage amount
     description: "Needed for battles, but not necessary..."
 };
 
@@ -54,7 +54,7 @@ let swordString = "Sword"; //For checking if the sword is present in inventory
 /*-----DISPLAYING INFORMATION TO THE PLAYER-----
 */
 
-//Function for showing player stats
+// Function for showing player stats
 function showStatus() {
     //Show status
     console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
@@ -63,7 +63,7 @@ function showStatus() {
     console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
 }
 
-//Function for displaying location description and available choices
+// Function for displaying location description and available choices
 function showLocation() {
     if(currentLocation === "Cherry Blossom Gardens") {
         console.log("\n:..✿ ∞CHERRY BLOSSOM GARDENS∞ ✿..:");
@@ -152,7 +152,7 @@ function showHelp() {
 /*-----MOVING AROUND THE MAP-----
 */
 
-//Function for movement between locations
+// Function for movement between locations
 function move(choiceNum) {
     let validMove = false;
     if(currentLocation === "Cherry Blossom Gardens") {
@@ -228,7 +228,7 @@ function hasItemType(type) {
 /*-----HANDLING CORE GAMEPLAY FUNCTIONS-----
 */
 
-//Displaying inventory
+// Displaying inventory
 function showInventory() {
     console.log("·•– ٠⚘ INVENTORY  ⚘٠ —•·");
     if(inventory.length === 0) {
@@ -240,7 +240,7 @@ function showInventory() {
     }
 }
 
-//Function for updating player health
+// Function for updating player health
 function updateHealth(amount) {
     playerHealth += amount;
 
@@ -262,7 +262,7 @@ function updateHealth(amount) {
 /*-----BUYING ITEMS-----
 */
 
-//Function for buying items at the blacksmith
+// Function for buying items at the blacksmith
 function buyFromBlacksmith() {
     if(inventory.some(item => item.name === swordString)) {
         console.log("You already have a sword.");
@@ -282,7 +282,7 @@ function buyFromBlacksmith() {
     }
 }
 
-//Function for buying items at the stalls in the village centre
+// Function for buying items at the stalls in the village centre
 function buyFromVillageStalls() {
     if(inventory.some(item => item.name === healingPotionString)) {
         console.log("You already have a healing potion. You feel it unneeded to buy another one right now. Might as well use up your current potion first...");
@@ -305,35 +305,35 @@ function buyFromVillageStalls() {
 // ---------------------------
 
 
-//Main game loop
+// Main game loop
 while(gameRunning) {
     // Location checking and displaying the relevant information
     showLocation();
     
-    //Get and validate the player's choice
+    // Get and validate the player's choice
     let validChoice = false;
     while(!validChoice) {
         try {
             let choice = readline.question("\nWhat will you choose to do? ");
 
-            //Check if input is empty
+            // Check if input is empty
             if(choice.trim() === "") {
                 throw "Please enter a number.";
             }
 
-            //Convert the input to a number
+            // Convert the input to a number
             let choiceNum = parseInt(choice);
             if(isNaN(choiceNum)) {
                 throw "The input you entered is not a number, it seems! Please enter a number instead.";
             }
 
-            //Handling choices based on location
+            // Handling choices based on location
             if(currentLocation === "Cherry Blossom Gardens") {
                 if(choiceNum < 1 || choiceNum > 8) {
                     throw "Please enter a number between 1 and 8.";
                 }
 
-                validChoice = true; //Valid choice made
+                validChoice = true; // Valid choice made
 
                 if(choiceNum <= 3) {
                     move(choiceNum);
@@ -357,7 +357,7 @@ while(gameRunning) {
                     throw "Please enter a number between 1 and 7.";
                 }
 
-                validChoice = true; //Valid choice made
+                validChoice = true; // Valid choice made
 
                 if (choiceNum === 1) {
                     move(choiceNum);
@@ -382,7 +382,7 @@ while(gameRunning) {
                     throw "Please enter a number between 1 and 7.";
                 }
 
-                validChoice = true; //Valid choice made
+                validChoice = true; // Valid choice made
                 if(choiceNum === 1) {
                     move(choiceNum);
                 } else if(choiceNum === 2) {
@@ -406,7 +406,7 @@ while(gameRunning) {
                     throw "Please enter a number between 1 and 6";
                 }
 
-                validChoice = true; //Valid choice made
+                validChoice = true; // Valid choice made
 
                 if(choiceNum === 1) {
                     move(choiceNum);
@@ -432,7 +432,7 @@ while(gameRunning) {
             console.log("\nPlease try that again!");
         }
 
-        //Check if the player died
+        // Check if the player died
         if(playerHealth <= 0) {
             console.log("\nYou... died. Farewell traveller, until another time.") //Insert emoji: wings
         }
