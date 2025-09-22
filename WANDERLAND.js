@@ -31,6 +31,7 @@ let firstVisit = true;
 let inventory = [];
 
 // Defining items as objects
+
 const healingPotion = {
     name: "Healing potion",
     type: "potion",
@@ -39,7 +40,7 @@ const healingPotion = {
     description: "Restores 30 health"
 };
 
-let healingPotionString = "Healing potion"; //For checking if the potion is present in inventory
+let healingPotionString = "Healing potion"; // For checking if the item is present in inventory
 
 const sword = {
     name: "Sword",
@@ -49,7 +50,47 @@ const sword = {
     description: "Needed for battles, but not necessary..."
 };
 
-let swordString = "Sword"; //For checking if the sword is present in inventory
+let swordString = "Sword"; // For checking if the item is present in inventory
+
+const dagger = {
+    name: "Dagger",
+    type: "weapon",
+    cost: 5,
+    effect: 7,    // Damage amount
+    description: "An alternative weapon when your sword isn't necessary"
+};
+
+let daggerString = "Dagger"; // For checking if the item is present in inventory
+
+const blade = {
+    name: "Rounded Blades",
+    type: "weapon",
+    cost: 3,
+    effect: 5,    // Damage amount
+    description: "A smaller, more precise weapon"
+};
+
+let bladeString = "Rounded Blades"; // For checking if the item is present in inventory
+
+const shield = {
+    name: "Shield",
+    type: "armour",
+    cost: 6,
+    effect: 5,    // Protection amount
+    description: "Provides protection in battles, and a better chance of survival"
+};
+
+let shieldString = "Shield"; // For checking if item is present in inventory
+
+const silverShield = {
+    name: "Silver Shield",
+    type: "armour",
+    cost: 8,
+    effect: 7,    // Protection amount
+    description: "A stronger shield; Helpful in more difficult battles"
+};
+
+let silverShieldString = "Silver Shield"; // For checking if item is present in inventory
 
 /*-----DISPLAYING INFORMATION TO THE PLAYER-----
 */
