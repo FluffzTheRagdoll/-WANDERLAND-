@@ -92,6 +92,14 @@ const silverShield = {
 
 let silverShieldString = "Silver Shield"; // For checking if item is present in inventory
 
+const note = {
+    name: "Note",
+    type: "collectable",
+    description: "Found inside your house"
+};
+
+let noteString = "Note"; // For checking if item is present in inventory
+
 /*-----DISPLAYING INFORMATION TO THE PLAYER-----
 */
 
@@ -255,6 +263,20 @@ function useItem() {
             console.log("\nYou can use your " + item.name + " in battle.");
             return true;
         }
+
+        if(item.type === "armor") {
+            console.log("\nYour " + item.name + " will help you in battle.");
+            return true;
+        }
+
+        if(item.name === "Note") {
+            console.log("\n'The monsters you will battle are not as simple as they seem.");
+            console.log("'Don't be fooled by any tricks they may play.'");
+            console.log("'Don't tear them to pieces just because of your pains.'");
+            console.log("'The world isn't as black and white as it seems.'");
+            return true;
+        }
+        
     } else {
         console.log("Invalid item number.");
     }
@@ -314,7 +336,7 @@ function buyFromBlacksmith() {
         console.log("A faint whispering floats around in the air, grabbing your attention. 'This way.' It tells you. You turn around to see a long sword with a decorated grip. A strange glow surrounds the sword. 'Take it. You'll need it...' The voice says. Then, out of the darkness, a rather frail man, around forty in age, walks over to you. 'Want the sword?' He asks, then notices your rather shocked expression. 'Oh. Don't mind the spirits. They like to hang around here.' the man hands you the sword.");
         playerGold -= sword.cost;
         
-        //Add weapon object to inventory instead of just the name
+        // Add weapon object to inventory instead of just the name
         inventory.push({...sword}); 
 
         console.log("\nYou buy the " + sword.name + " for " + sword.cost + " gold.");
@@ -334,7 +356,7 @@ function buyFromVillageStalls() {
         console.log("You wait, but no one seems to be there at the stall. Finally, you decide to buy the potion anyway. You leave the gold at the stall, and take the healing potion.");
         playerGold -= healingPotion.cost;
         
-        //Add healing potion object to inventory instead of just the name
+        // Add healing potion object to inventory instead of just the name
         inventory.push({...healingPotion});
 
         console.log("\nYou buy the " + healingPotion.name + " for " + healingPotion.cost + " gold.");
@@ -457,9 +479,16 @@ while(gameRunning) {
                 } else if(choiceNum === 3) {
                     showInventory();
                 } else if(choiceNum === 4) {
-                    console.log("You look around the house. Soft sunlight seeps in through the windows. On the table lies a note.");
-                    console.log("NEW ITEM COLLECTED.");
-                    inventory.push("Note");
+                    if(inventory.some(item => item.name === noteString) {
+                        console.log("You look around the house. Nothing to be found, really.");
+                    }
+                    
+                    if(!inventory.some(item => item.name === noteString) {
+                        console.log("You look around the house. Soft sunlight seeps in through the windows. On the table lies a note.");
+                        console.log("NEW ITEM COLLECTED.");
+                        // Add note object to inventory instead of just the name
+                        inventory.push({...note});
+                    }
                 } else if(choiceNum === 5) {
                     useItem();
                 } else if(choiceNum === 6) {
