@@ -153,9 +153,10 @@ function showLocation() {
         console.log("1: Return to the cherry blossom gardens");
         console.log("2: Check status");
         console.log("3: Check inventory");
-        console.log("4: Use item");
-        console.log("5: Get help");
-        console.log("6: Quit game");
+        console.log("4: Look around");
+        console.log("5: Use item");
+        console.log("6: Get help");
+        console.log("7: Quit game");
     }
 }
 
@@ -440,11 +441,11 @@ while(gameRunning) {
                     gameRunning = false;
                     console.log("Farewell, traveller.");
                 } else {
-                    console.log("\nInvalid choice. Please select a number between 1 - 4.");
+                    console.log("\nInvalid choice. Please select a number between 1 - 7.");
                 }
             } else if(currentLocation === "Your house") {
-                if(choiceNum < 1 || choiceNum > 6) {
-                    throw "Please enter a number between 1 and 6";
+                if(choiceNum < 1 || choiceNum > 7) {
+                    throw "Please enter a number between 1 and 7";
                 }
 
                 validChoice = true; // Valid choice made
@@ -454,17 +455,20 @@ while(gameRunning) {
                 } else if(choiceNum === 2) {
                     showStatus();
                 } else if(choiceNum === 3) {
-                    // Inventory check
                     showInventory();
                 } else if(choiceNum === 4) {
-                    useItem();
+                    console.log("You look around the house. Soft sunlight seeps in through the windows. On the table lies a note.");
+                    console.log("NEW ITEM COLLECTED.");
+                    inventory.push("Note");
                 } else if(choiceNum === 5) {
-                    showHelp();
+                    useItem();
                 } else if(choiceNum === 6) {
+                    showHelp();
+                } else if(choiceNum === 7) {
                     gameRunning = false;
                     console.log("Farewell, traveller.");
                 } else {
-                    console.log("\nInvalid choice. Please select a number between 1 - 6.");
+                    console.log("\nInvalid choice. Please select a number between 1 - 7.");
                 }
             }
 
