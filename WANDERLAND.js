@@ -249,7 +249,7 @@ function useItem() {
         console.log("   " + (index + 1) + ". " + item.name);
     });
 
-    let choice = readline.question("Which item do you wish to use? (Enter a number or 'cancel' if you change your mind.");
+    let choice = readline.question("Which item do you wish to use? (Enter a number or 'cancel' if you change your mind.): ");
     if(choice === 'cancel') return false;
 
     let index = parseInt(choice) - 1;
@@ -275,9 +275,9 @@ function useItem() {
 
         if(item.name === "Note") {
             console.log("\n'The monsters you will battle are not as simple as they seem.");
-            console.log("'Don't be fooled by any tricks they may play.'");
-            console.log("'Don't tear them to pieces just because of your pains.'");
-            console.log("'The world isn't as black and white as you want it to be.'");
+            console.log("Don't be fooled by any tricks they may play.");
+            console.log("Don't tear them to pieces just because of your pains.");
+            console.log("The world isn't as black and white as you want it to be.'");
             return true;
         }
         
@@ -335,41 +335,23 @@ function buyFromBlacksmith() {
     console.log("A faint whispering floats around in the air, grabbing your attention. 'This way.' It says. You turn around to see a collection of weapons and armour, some in glass cases and the rest hung on the walls. 'Take something. You'll need to be prepared...' The voice tells you. Then, out of the darkness, a rather frail man, around forty in age, walks over to you. 'Here to buy something?' He asks, then notices your rather shocked expression. 'Oh. Don't mind the spirits. They like to hang around here.'");
     
     // Ask the player what they want to purchase
-    let choice = readline.question("\nWhat do you want to buy? (Enter a number or 'cancel')");
-    if(choice === 'cancel') return false;
-    
-    console.log("1. Sword - 10 gold");
+    console.log("\n1. Sword - 10 gold");
     console.log("2. Dagger - 5 gold");
     console.log("3. Rounded Blades - 3 gold");
     console.log("4. Shield - 6 gold");
     console.log("5. Silver Shield - 8 gold");
-
-    // Checking if items are present in inventory
-    if(inventory.some(item => item.name === swordString)) {
-        console.log("You already have a sword.");
-    }
-
-    if(inventory.some(item => item.name === daggerString)) {
-        console.log("You already have a dagger.");
-    }
-
-    if(inventory.some(item => item.name === bladeString)) {
-        console.log("You already have blades.");
-    }
-
-    if(inventory.some(item => item.name === shieldString)) {
-        console.log("You already have a shield.");
-    }
-
-    if(inventory.some(item => item.name === silverShieldString)) {
-        console.log("You already have a silver shield.");
-    }
+    let choice = readline.question("\nWhat do you want to buy? (Enter a number or 'cancel'): ");
+    
+    if(choice === 'cancel') return false;
 
     // Displaying the correct information depending on what the player wants to buy
 
     let choiceNumber = parseInt(choice);
     if(choiceNumber === 1) {
-        if(!inventory.some(item => item.name === swordString) && playerGold >= 10) {
+        if(inventory.some(item => item.name === swordString)) {
+            console.log("You already have a sword.");
+        }
+        else if(!inventory.some(item => item.name === swordString) && playerGold >= 10) {
             playerGold -= sword.cost;
             console.log("\nYou buy the " + sword.name + " for " + sword.cost + " gold.");
             console.log("Gold remaining: " + playerGold);
@@ -378,7 +360,10 @@ function buyFromBlacksmith() {
             console.log("'You don't have enough gold, it seems.' The blacksmith says to you. 'Come back when you have enough. Can't start throwing away this stuff for nothing, you know.'");
     }
     else if(choiceNumber === 2) {
-        if(!inventory.some(item => item.name === daggerString) && playerGold >= 5) {
+        if(inventory.some(item => item.name === daggerString)) {
+            console.log("You already have a dagger.");
+        }
+        else if(!inventory.some(item => item.name === daggerString) && playerGold >= 5) {
             playerGold -= dagger.cost;
             console.log("\nYou buy the " + dagger.name + " for " + dagger.cost + " gold.");
             console.log("Gold remaining: " + playerGold);
@@ -388,17 +373,23 @@ function buyFromBlacksmith() {
         }
     }
     else if(choiceNumber === 3) {
-        if(!inventory.some(item => item.name === bladeString) && playerGold >= 3) {
+        if(inventory.some(item => item.name === bladeString)) {
+            console.log("You already have blades.");
+        }
+        else if(!inventory.some(item => item.name === bladeString) && playerGold >= 3) {
             playerGold -= blades.cost;
-            console.log("\nYou buy the " + blades.name + " for " + blades.cost + " gold.");
+            console.log("\nYou buy the " + blade.name + " for " + blade.cost + " gold.");
             console.log("Gold remaining: " + playerGold);
-            inventory.push({...roundedBlades})
+            inventory.push({...blade})
         } else if(!inventory.some(item => item.name === bladeString) && playerGold <= 3) {
             console.log("'You don't have enough gold, it seems.' The blacksmith says to you. 'Come back when you have enough. Can't start throwing away this stuff for nothing, you know.'");
         }
     }
     else if(choiceNumber === 4) {
-        if(!inventory.some(item => item.name === shieldString) && playerGold >= 6) {
+        if(inventory.some(item => item.name === shieldString)) {
+            console.log("You already have a shield.");
+        }
+        else if(!inventory.some(item => item.name === shieldString) && playerGold >= 6) {
             playerGold -= shield.cost;
             console.log("\nYou buy the " + shield.name + " for " + shield.cost + " gold.");
             console.log("Gold remaining: " + playerGold);
@@ -408,7 +399,10 @@ function buyFromBlacksmith() {
         }
     }
     else if(choiceNumber === 5) {
-        if(!inventory.some(item => item.name === silverShieldString) && playerGold >= 8) {
+        if(inventory.some(item => item.name === silverShieldString)) {
+            console.log("You already have a silver shield.");
+        }
+        else if(!inventory.some(item => item.name === silverShieldString) && playerGold >= 8) {
             playerGold -= silverShield.cost;
             console.log("\nYou buy the " + silverShield.name + " for " + silverShield.cost + " gold.");
             console.log("Gold remaining: " + playerGold);
@@ -416,6 +410,8 @@ function buyFromBlacksmith() {
         } else if(!inventory.some(item => item.name === silverShieldString) && playerGold <= 8) {
             console.log("'You don't have enough gold, it seems.' The blacksmith says to you. 'Come back when you have enough. Can't start throwing away this stuff for nothing, you know.'");
         }
+    } else {
+        console.log("Invalid choice number.");
     }
 
 // Function for buying items at the stalls in the village centre
