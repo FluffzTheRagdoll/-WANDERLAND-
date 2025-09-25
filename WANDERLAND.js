@@ -368,8 +368,41 @@ function buyFromBlacksmith() {
     // Displaying the correct information depending on what the player wants to buy
 
     let choiceNumber = parseInt(choice);
-    if(choiceNumber === 1 && !inventory.some(item => item.name === swordString) && playerGold >= 10) {
-        
+    if(choiceNumber === 1) {
+        if(!inventory.some(item => item.name === swordString) && playerGold >= 10) {
+        playerGold -= sword.cost;
+        console.log("\nYou buy the " + sword.name + " for " + sword.cost + " gold.");
+        console.log("Gold remaining: " + playerGold);
+        } else if(!inventory.some(item => item.name === swordString) && playerGold <= 10) {
+            console.log("'You don't have enough gold, it seems.' The blacksmith says to you. 'Come back when you have enough. Can't start throwing away this stuff for nothing, you know.'");
+    }
+    else if(choiceNumber === 2) {
+        if(!inventory.some(item => item.name === daggerString) && playerGold >= 5) {
+            playerGold -= dagger.cost;
+            console.log("\nYou buy the " + dagger.name + " for " + dagger.cost + " gold.");
+            console.log("Gold remaining: " + playerGold);
+        } else if(!inventory.some(item => item.name === daggerString) && playerGold <= 5) {
+            console.log("'You don't have enough gold, it seems.' The blacksmith says to you. 'Come back when you have enough. Can't start throwing away this stuff for nothing, you know.'");
+        }
+    }
+    else if(choiceNumber === 3) {
+        if(choiceNumber === 3 && !inventory.some(item => item.name === bladeString) && playerGold >= 3) {
+            playerGold -= blades.cost;
+            console.log("\nYou buy the " + blades.name + " for " + blades.cost + " gold.");
+            console.log("Gold remaining: " + playerGold);
+        }
+    }
+
+    if(choiceNumber === 4 && !inventory.some(item => item.name === shieldString) && playerGold >= 6) {
+        playerGold -= shield.cost;
+        console.log("\nYou buy the " + shield.name + " for " + shield.cost + " gold.");
+        console.log("Gold remaining: " + playerGold);
+    }
+
+    if(choiceNumber === 5 && !inventory.some(item => item.name === silverShieldString) && playerGold >= 8) {
+        playerGold -= silverShield.cost;
+        console.log("\nYou buy the " + silverShield.name + " for " + silverShield.cost + " gold.");
+        console.log("Gold remaining: " + playerGold);
     }
 
     if(playerGold >= 10 && !inventory.some(item => item.name === swordString)) {
