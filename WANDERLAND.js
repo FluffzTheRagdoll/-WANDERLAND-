@@ -137,7 +137,7 @@ function showLocation() {
         console.log("The smell of hot metal fills the air. Clanking sounds rise from somewhere within the small building. Weapons and armour line the walls.");
         
         console.log("1: Return to the cherry blossom gardens");
-        console.log("2: Buy sword (costs 10 gold)");
+        console.log("2: Buy weapons and armour");
         console.log("3: Check status");
         console.log("4: Check inventory");
         console.log("5: Use item");
@@ -182,7 +182,7 @@ function showHelp() {
     console.log("You will lose the battle if you have no weapon.");
 
     console.log("\nItem Usage:");
-    console.log("You can buy a sword at the blacksmith.");
+    console.log("You can buy weapons and armour at the blacksmith.");
     console.log("You can buy a healing potion at one of the stalls in the the village centre.");
     console.log("Other items can be collected in various locations across the map.");
     console.log("The healing potion can be used to restore 30 health if you suffer damage.");
@@ -233,6 +233,10 @@ return validMove;
 /*-----ITEM HANDLING-----
 */
 
+function getItemsByType(type) {
+    return inventory.filter(item => item.type === type);
+}
+
 // Function for using items
 function useItem() {
     if(inventory.length === 0) {
@@ -264,7 +268,7 @@ function useItem() {
             return true;
         }
 
-        if(item.type === "armor") {
+        if(item.type === "armour") {
             console.log("\nYour " + item.name + " will help you in battle.");
             return true;
         }
@@ -273,7 +277,7 @@ function useItem() {
             console.log("\n'The monsters you will battle are not as simple as they seem.");
             console.log("'Don't be fooled by any tricks they may play.'");
             console.log("'Don't tear them to pieces just because of your pains.'");
-            console.log("'The world isn't as black and white as it seems.'");
+            console.log("'The world isn't as black and white as you want it to be.'");
             return true;
         }
         
@@ -328,12 +332,48 @@ function updateHealth(amount) {
 
 // Function for buying items at the blacksmith
 function buyFromBlacksmith() {
+    console.log("A faint whispering floats around in the air, grabbing your attention. 'This way.' It says. You turn around to see a collection of weapons and armour, some in glass cases and the rest hung on the walls. 'Take something. You'll need to be prepared...' The voice tells you. Then, out of the darkness, a rather frail man, around forty in age, walks over to you. 'Here to buy something?' He asks, then notices your rather shocked expression. 'Oh. Don't mind the spirits. They like to hang around here.'");
+    
+    // Ask the player what they want to purchase
+    let choice = readline.question("\nWhat do you want to buy? (Enter a number or 'cancel')");
+    if(choice === 'cancel') return false;
+    
+    console.log("1. Sword - 10 gold");
+    console.log("2. Dagger - 5 gold");
+    console.log("3. Rounded Blades - 3 gold");
+    console.log("4. Shield - 6 gold");
+    console.log("5. Silver Shield - 8 gold");
+
+    // Checking if items are present in inventory
     if(inventory.some(item => item.name === swordString)) {
         console.log("You already have a sword.");
     }
 
+    if(inventory.some(item => item.name === daggerString)) {
+        console.log("You already have a dagger.");
+    }
+
+    if(inventory.some(item => item.name === bladeString)) {
+        console.log("You already have blades.");
+    }
+
+    if(inventory.some(item => item.name === shieldString)) {
+        console.log("You already have a shield.");
+    }
+
+    if(inventory.some(item => item.name === silverShieldString)) {
+        console.log("You already have a silver shield.");
+    }
+
+    // Displaying the correct information depending on what the player wants to buy
+
+    let choiceNumber = parseInt(choice);
+    if(choiceNumber === 1 && !inventory.some(item => item.name === swordString) && playerGold >= 10) {
+        
+    }
+
     if(playerGold >= 10 && !inventory.some(item => item.name === swordString)) {
-        console.log("A faint whispering floats around in the air, grabbing your attention. 'This way.' It tells you. You turn around to see a long sword with a decorated grip. A strange glow surrounds the sword. 'Take it. You'll need it...' The voice says. Then, out of the darkness, a rather frail man, around forty in age, walks over to you. 'Want the sword?' He asks, then notices your rather shocked expression. 'Oh. Don't mind the spirits. They like to hang around here.' the man hands you the sword.");
+        console.log("A faint whispering floats around in the air, grabbing your attention. 'This way.' It tells you. You turn around to see a long sword with a decorated grip. A strange glow surrounds the sword. 'Take it. You'll need it...' The voice says. Then, out of the darkness, a rather frail man, around forty in age, walks over to you. 'Want the sword?' He asks, then notices your rather shocked expression. 'Oh. Don't mind the spirits. They like to hang around here.' The man hands you the sword.");
         playerGold -= sword.cost;
         
         // Add weapon object to inventory instead of just the name
