@@ -27,6 +27,10 @@ let gameRunning = true;
 let currentLocation = "Cherry Blossom Gardens";
 let firstVisit = true;
 
+// Extra game state variables
+let canExitVillageCentre = false;
+let firstHouseVisit = true;
+
 // Using an array as an inventory
 let inventory = [];
 
@@ -147,13 +151,24 @@ function showLocation() {
         console.log("_-+°ₒ❀VILLAGE❀ₒ°+-_");
         console.log("You follow the second path to the village centre. There are small houses spread out onto a patch of sandy gravel. Grass surrounds the area, and all is quiet. There are wooden stalls set up in the corners, but one in particular catches your eye.");
         
-        console.log("1: Return to the cherry blossom gardens");
-        console.log("2: Go over to a stall and buy a healing potion (costs 8 gold)");
-        console.log("3: Check status");
-        console.log("4: Check inventory");
-        console.log("5: Use item");
-        console.log("6: Get help")
-        console.log("7: Quit game");
+        if(canExitVillageCentre = true) {
+            console.log("1: Return to the cherry blossom gardens");
+            console.log("2: Go over to a stall and buy a healing potion (costs 8 gold)");
+            console.log("3: Check status");
+            console.log("4: Check inventory");
+            console.log("5: Walk out of the village centre and into the grass surrounding the area.");
+            console.log("6: Use item");
+            console.log("7: Get help")
+            console.log("8: Quit game");
+        } else {
+            console.log("1: Return to the cherry blossom gardens");
+            console.log("2: Go over to a stall and buy a healing potion (costs 8 gold)");
+            console.log("3: Check status");
+            console.log("4: Check inventory");
+            console.log("5: Use item");
+            console.log("6: Get help")
+            console.log("7: Quit game");
+        }
     } else if(currentLocation === "Your house") {
         console.log("・‥…━━━YOUR HOUSE━━━…‥・");
         console.log("You turn around and enter your house. It's rather small inside, and wooden windows let in sunlight from outside. There is a table and a chair in the centre of the room. Being in here brings back a lot of memories for you...");
@@ -219,11 +234,26 @@ function move(choiceNum) {
             console.log("\nYou turn around and enter your house.");
             validMove = true;
         }
-    } else if(currentLocation === "Blacksmith" || currentLocation === "Village Centre" || currentLocation === "Your house") {
+    } else if(currentLocation === "Blacksmith"){
         if(choiceNum === 1) {
             currentLocation = "Cherry Blossom Gardens";
             console.log("You return to the cherry blossom gardens.");
             validMove = true;
+        }
+    } else if(currenLocation === "Village Centre") {
+        if(choiceNum === 1) {
+            currentLocation = "Cherry Blossom Gardens";
+            console.log("You return to the cherry blossom gardens.");
+        }
+    } else if(currentLocation === "Your house") {
+        if(choiceNum === 1) {
+            currentLocation = "Cherry Blossom Gardens";
+            console.log("You return to the cherry blossom gardens.");
+            if(firstHouseVisit === true) {
+                console.log("Outside your house, you spot a strange glow from somewhere in the grass. Upon walking over, you see a familiar sign indented in the soil. Wings, with rings and the outline of a glow around them. Strange...");
+                firstHouseVisit = false;
+                canExitVillageCentre = true;
+            }
         }
     }
 
@@ -510,7 +540,32 @@ while(gameRunning) {
                     console.log("\nInvalid choice. Please select a number between 1 - 7.");
                 }
             } else if(currentLocation === "Village Centre") {
-                if(choiceNum < 1 || choiceNum > 7){
+                if(canExitVillageCentre === true) {
+                    if(choiceNum < 1 || choiceNum > 8){
+                        throw "Please enter a number between 1 and 8.";
+                        validChoice = true; // Valid choice made
+                    if(choiceNum === 1) {
+                        move(choiceNum);
+                    } else if(choiceNum === 2) {
+                        buyFromVillageStalls();
+                    } else if(choiceNum === 3) {
+                        showStatus();
+                    } else if(choiceNum === 4) {
+                        showInventory();
+                    } else if(choiceNum === 5) {
+                        move(choiceNum);
+                    } else if(choiceNum === 6) {
+                        useItem();
+                    } else if(choiceNum === 7) {
+                        showHelp();
+                    } else if(choiceNum === 8) {
+                        gameRunning = false;
+                        console.log("Farewell, traveller.");
+                    } else {
+                        console.log("\nInvalid choice. Please select a number between 1 - 8.");
+                    }
+                } else {
+                    if(choiceNum < 1 || choiceNum > 7){
                     throw "Please enter a number between 1 and 7.";
                 }
 
