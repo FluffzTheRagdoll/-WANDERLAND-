@@ -182,7 +182,17 @@ function showLocation(location) {
         console.log("7: Quit game");
     }
 } else if(currentLocation === "Woodlands") {
-    
+    console.log("⸙͎۪۫°｡✿⋆WOODLANDS⋆༄｡°⸙͎۪۫");
+    console.log("As you continue, the grass gets slightly denser. Delicate flowers stick out of the green blades. A sandy path, hardly noticeable among the grass, leads off into the unknown.");
+
+    console.log("1: Return to the village centre");
+    console.log("2: Walk on");
+    console.log("3: Follow the small sandy path");
+    console.log("4: Check status");
+    console.log("5: Check inventory");
+    console.log("6: Use item");
+    console.log("7: Get help");
+    console.log("8: Quit game");
 }
 
 // Function to help users understand what's going on
@@ -191,7 +201,9 @@ function showHelp() {
 
     console.log("\nMovement Commands:");
     console.log("When in the cherry blossom gardens, choose 1-3 to move between locations.");
-    console.log("In any other location, choose 1 to return to the cherry blossom gardens.");
+    console.log("In the blacksmith, village centre and house, choose 1 to return to the cherry blossom gardens.");
+	console.log("In the woodlands, choose 1 to return to the village centre.");
+	console.log("In other locations, there will be various options that lead you to new locations.");
 
     console.log("\nBattle Commands:");
     console.log("In order to win a battle, you need a sword.");
@@ -242,11 +254,14 @@ function move(choiceNum) {
             console.log("You return to the cherry blossom gardens.");
             validMove = true;
         }
-    } else if(currenLocation === "Village Centre") {
+    } else if(currentLocation === "Village Centre") {
         if(choiceNum === 1) {
             currentLocation = "Cherry Blossom Gardens";
             console.log("You return to the cherry blossom gardens.");
-        }
+        } else if(canExitVillageCentre === true && choiceNum === 5) {
+			currenLocation = "Woodlands";
+			console.log("You walk into the grass surrounding the village.");
+		}
     } else if(currentLocation === "Your house") {
         if(choiceNum === 1) {
             currentLocation = "Cherry Blossom Gardens";
@@ -257,7 +272,12 @@ function move(choiceNum) {
                 canExitVillageCentre = true;
             }
         }
-    }
+    } else if(currentLocation === "Woodlands") {
+		if(choiceNum === 1) {
+			currentLocation = "Village Centre";
+			console.log("You return to the village centre.");
+		} else if(currentLocation) // Continue this!
+	}
 
 return validMove;    
 }
