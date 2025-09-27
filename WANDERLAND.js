@@ -104,6 +104,14 @@ const note = {
 
 let noteString = "Note"; // For checking if item is present in inventory
 
+const blossomScroll = {
+	name: "Cherry Blossom Scroll",
+	type: "collectable",
+	description: "Found at the base of a tree within the woodlands; Something is close..."
+}
+
+let blossomScrollString = "Cherry Blossom Scroll"; // For checking if item is present in inventory
+
 /*-----DISPLAYING INFORMATION TO THE PLAYER-----
 */
 
@@ -119,11 +127,12 @@ function showStatus() {
 // Function for displaying location description and available choices
 function showLocation(location) {
     if(currentLocation === "Cherry Blossom Gardens") {
+		// Part one
         console.log("\n:..✿ ∞CHERRY BLOSSOM GARDENS∞ ✿..:");
         console.log("You're in a quiet, serene garden with cherry blossom trees on either side of the sandy gravel path you're standing on. The path forks ahead into two.");
 
         console.log("\nWhere will you start your journey?");
-        console.log("1: Follow the first path to the blacksmith");
+        console.log("\n1: Follow the first path to the blacksmith");
         console.log("2: Follow the second path to the village centre");
         console.log("3: Turn back and head to your house behind you");
         console.log("4: Check status");
@@ -140,7 +149,7 @@ function showLocation(location) {
         console.log("\n»»——⍟BLACKSMITH⍟——««");
         console.log("The smell of hot metal fills the air. Clanking sounds rise from somewhere within the small building. Weapons and armour line the walls.");
         
-        console.log("1: Return to the cherry blossom gardens");
+        console.log("\n1: Return to the cherry blossom gardens");
         console.log("2: Buy weapons and armour");
         console.log("3: Check status");
         console.log("4: Check inventory");
@@ -148,11 +157,11 @@ function showLocation(location) {
         console.log("6: Get help");
         console.log("7: Quit game");
     } else if(currentLocation === "Village Centre") {
-        console.log("_-+°ₒ❀VILLAGE❀ₒ°+-_");
+        console.log("\n_-+°ₒ❀VILLAGE❀ₒ°+-_");
         console.log("You follow the second path to the village centre. There are small houses spread out onto a patch of sandy gravel. Grass surrounds the area, and all is quiet. There are wooden stalls set up in the corners, but one in particular catches your eye.");
         
         if(canExitVillageCentre === true) {
-            console.log("1: Return to the cherry blossom gardens");
+            console.log("\n1: Return to the cherry blossom gardens");
             console.log("2: Go over to a stall and buy a healing potion (costs 8 gold)");
             console.log("3: Check status");
             console.log("4: Check inventory");
@@ -161,7 +170,7 @@ function showLocation(location) {
             console.log("7: Get help")
             console.log("8: Quit game");
         } else {
-            console.log("1: Return to the cherry blossom gardens");
+            console.log("\n1: Return to the cherry blossom gardens");
             console.log("2: Go over to a stall and buy a healing potion (costs 8 gold)");
             console.log("3: Check status");
             console.log("4: Check inventory");
@@ -170,29 +179,45 @@ function showLocation(location) {
             console.log("7: Quit game");
         }
     } else if(currentLocation === "Your house") {
-        console.log("・‥…━━━YOUR HOUSE━━━…‥・");
+        console.log("\n・‥…━━━YOUR HOUSE━━━…‥・");
         console.log("You turn around and enter your house. It's rather small inside, and wooden windows let in sunlight from outside. There is a table and a chair in the centre of the room. Being in here brings back a lot of memories for you...");
         
-        console.log("1: Return to the cherry blossom gardens");
+        console.log("\n1: Return to the cherry blossom gardens");
         console.log("2: Check status");
         console.log("3: Check inventory");
         console.log("4: Look around");
         console.log("5: Use item");
         console.log("6: Get help");
         console.log("7: Quit game");
-    }
-} else if(currentLocation === "Woodlands") {
-    console.log("⸙͎۪۫°｡✿⋆WOODLANDS⋆༄｡°⸙͎۪۫");
-    console.log("As you continue, the grass gets slightly denser. Delicate flowers stick out of the green blades. A sandy path, hardly noticeable among the grass, leads off into the unknown.");
-
-    console.log("1: Return to the village centre");
-    console.log("2: Walk on");
-    console.log("3: Follow the small sandy path");
-    console.log("4: Check status");
-    console.log("5: Check inventory");
-    console.log("6: Use item");
-    console.log("7: Get help");
-    console.log("8: Quit game");
+    } else if(currentLocation === "Woodlands") {
+		// Part two
+        console.log("\n⸙͎۪۫°｡✿⋆WOODLANDS⋆༄｡°⸙͎۪۫");
+        console.log("As you continue, the grass gets slightly denser. Delicate flowers stick out of the green blades. A sandy path, hardly noticeable among the grass, leads off into the unknown.");
+    
+        console.log("\n1: Return to the village centre");
+        console.log("2: Walk on");
+        console.log("3: Follow the small sandy path");
+        console.log("4: Check status");
+        console.log("5: Check inventory");
+        console.log("6: Use item");
+        console.log("7: Get help");
+        console.log("8: Quit game");
+    } else if(currentLocation === "Woodlands - Part 2") {
+		console.log("\n1: Cross the bridge");
+		console.log("2: Check status");
+		console.log("3: Check inventory");
+		console.log("4: Use item");
+		console.log("5: Get help");
+		console.log("6: Quit game");
+	} else if(currentLocation === "Woodlands - Part 3 (Finale)") {
+		console.log("\n1: Check out the glinting object");
+		console.log("2: Keep going");
+		console.log("3: Check status");
+		console.log("4: Check inventory");
+		console.log("5: Use item");
+		console.log("6: Get help");
+		console.log("7: Quit game");
+	}
 }
 
 // Function to help users understand what's going on
@@ -203,7 +228,7 @@ function showHelp() {
     console.log("When in the cherry blossom gardens, choose 1-3 to move between locations.");
     console.log("In the blacksmith, village centre and house, choose 1 to return to the cherry blossom gardens.");
 	console.log("In the woodlands, choose 1 to return to the village centre.");
-	console.log("In other locations, there will be various options that lead you to new locations.");
+	console.log("In other locations, there will be various options that lead you to new areas.");
 
     console.log("\nBattle Commands:");
     console.log("In order to win a battle, you need a sword.");
@@ -219,6 +244,7 @@ function showHelp() {
     console.log("\nOther Commands:");
     console.log("Choose the status option to view your health, location and gold.");
     console.log("Choose the inventory option to view items you have collected.");
+	console.log("Choose the use item option to use items from your inventory, or to view scrolls and notes.");
     console.log("Choose the help option to see these messages again.");
     console.log("Choose the quit option to end the game.");
 
@@ -259,7 +285,7 @@ function move(choiceNum) {
             currentLocation = "Cherry Blossom Gardens";
             console.log("You return to the cherry blossom gardens.");
         } else if(canExitVillageCentre === true && choiceNum === 5) {
-			currenLocation = "Woodlands";
+			currentLocation = "Woodlands";
 			console.log("You walk into the grass surrounding the village.");
 		}
     } else if(currentLocation === "Your house") {
@@ -279,12 +305,20 @@ function move(choiceNum) {
 		} else if(choiceNum === 2) {
 			console.log("You walk on, further and further. Nothing of significance seems to be in sight. Then, you finally reach somewhere.");
 			console.log("A gushing river streams through the grass. A wooden bridge arches above it. Trees, with leaves of golden and pink, surround the area.");
+			currentLocation = "Woodlands - Part 2";
 		} else if(choiceNum === 3) {
 			console.log("You follow the sandy path further and further. The path keeps on going, so you do too. Eventually, though, after what seems like eternity, the path fades away.");
 			console.log("Upon looking up, you see a tree, its trunk is dark and withered. The leaves on its crooked branches are dark and pointed. But what stands out the most is the symbol etched into the tree's bark. Wings. With rings and the outline of a glow around them. But... the wings are broken.");
 			console.log("Behind the tree is a forest of more trees, dark and foreboding. A breeze sifts through, causing the branches to creak awfully.");
 			currentLocation = "The Dark Forest";
 		}
+	} else if(currentLocation === "Woodlands - Part 2") {
+		if(currentLocation === 1) {
+			console.log("You start to cross the bridge, but stop briefly in once you're in the middle to glance down at the river. The sounds of the water rushing and the leaves rustling makes you feel calm. You continue and make it to the other side.");
+			currentLocation = "Woodlands - Part 3 (Finale)";
+		}
+	} else if(currentLocation === "Woodlands - Part 3 (Finale)") {
+		console.log("You walk on. Dappled sunlight comes down through the canopy of trees above. A soft breeze passes by. Eventually, you see something glinting at the base of a tree.");
 	}
 
 return validMove;    
@@ -340,6 +374,24 @@ function useItem() {
             console.log("The world isn't as black and white as you want it to be.'");
             return true;
         }
+
+		if(item.name === "Cherry Blossom Scroll") {
+			console.log("\n'ɪᴛ ʜᴀs ᴡɪɴɢs, ʙᴜᴛ ᴄᴀɴɴᴏᴛ ғʟʏ");
+			console.log("ɪᴛ ʜᴀs ᴇʏᴇs, ʙᴜᴛ ᴄᴀɴɴᴏᴛ ᴄʀʏ");
+			console.log("ɪᴛ ʜᴀs ɴᴏ ʜᴇᴀʀᴛ, ᴀɴᴅ ᴀɴᴅ ɴᴏ sᴏᴜʟ");
+			console.log("ᴛʜᴇʀᴇ ᴀʀᴇ ɴᴏ sᴛᴏʀɪᴇs ᴛᴏ ʙᴇ ᴛᴏʟᴅ");
+			console.log("\nɪғ ʏᴏᴜ ᴡɪsʜ ᴛᴏ ᴅᴀʀᴇ,");
+			console.log("ᴇɴᴛᴇʀ ɪᴛ's ᴇʏᴇʟɪɴᴇ");
+			console.log("ᴀɴᴅ ʜᴏʟᴅ ɪᴛs sᴛᴀʀᴇ,");
+			console.log("ʏᴏᴜ'ʟʟ ʙᴇ ɢᴏᴏᴅ ᴀs ɢᴏɴᴇ");
+			console.log("\nʙᴜᴛ ɪғ ɪᴛ's ᴡʜᴀᴛ ʏᴏᴜ ᴍᴜsᴛ ᴅᴏ,");
+			console.log("ɪғ ɪᴛ ʀᴇᴀʟʟʏ ᴍᴀᴛᴛᴇʀs ᴛᴏ ʏᴏᴜ,");
+			console.log("ᴛʀʏ ᴛᴏ ғɪɴᴅ ᴛʜᴇ ᴘᴇᴛᴀʟs ᴏғ ᴀ ʙʟᴏssᴏᴍ,");
+			console.log("ᴏɴᴇ ᴛʜᴀᴛ ɢʀᴏᴡs ᴡɪᴛʜᴏᴜᴛ ᴛʜᴇ sᴜɴ");
+			console.log("ᴀ sʟɪɢʜᴛ ᴛᴏᴜᴄʜ ᴏғ sᴘᴀʀᴋʟᴇ,");
+			console.log("ɪɴ ɪᴛs ᴍɪsᴇʀᴀʙʟᴇ ᴄʜᴀʀᴍ'");
+			return true;
+		}
         
     } else {
         console.log("Invalid item number.");
@@ -418,6 +470,7 @@ function buyFromBlacksmith() {
             inventory.push({...sword});
         } else if(!inventory.some(item => item.name === swordString) && playerGold <= 10) {
             console.log("'You don't have enough gold, it seems.' The blacksmith says to you. 'Come back when you have enough. Can't start throwing away this stuff for nothing, you know.'");
+        }    
     }
     else if(choiceNumber === 2) {
         if(inventory.some(item => item.name === daggerString)) {
@@ -473,7 +526,7 @@ function buyFromBlacksmith() {
     } else {
         console.log("Invalid choice number.");
     }
-
+}
 // Function for buying items at the stalls in the village centre
 function buyFromVillageStalls() {
     if(inventory.some(item => item.name === healingPotionString)) {
@@ -489,7 +542,7 @@ function buyFromVillageStalls() {
 
         console.log("\nYou buy the " + healingPotion.name + " for " + healingPotion.cost + " gold.");
         console.log("Gold remaining: " + playerGold);
-    } else if( playerGold <= 8 && !inventory.some(item => item.name === healingPotionString)) {
+    } else if(playerGold <= 8 && !inventory.some(item => item.name === healingPotionString)) {
         console.log("You don't have enough gold to buy the potion. You feel it would be wrong to take it without paying, so you leave the magic mixture alone. You think, 'Perhaps I can come back later when the seller is here. Then I could haggle a bit...'");
     }
 }
@@ -521,6 +574,7 @@ while(gameRunning) {
 
             // Handling choices based on location
             if(currentLocation === "Cherry Blossom Gardens") {
+				// Part one
                 if(choiceNum < 1 || choiceNum > 8) {
                     throw "Please enter a number between 1 and 8.";
                 }
@@ -572,7 +626,9 @@ while(gameRunning) {
                 if(canExitVillageCentre === true) {
                     if(choiceNum < 1 || choiceNum > 8){
                         throw "Please enter a number between 1 and 8.";
-                        validChoice = true; // Valid choice made
+                    }
+
+                    validChoice = true; // Valid choice made    
                     if(choiceNum === 1) {
                         move(choiceNum);
                     } else if(choiceNum === 2) {
@@ -595,7 +651,8 @@ while(gameRunning) {
                     }
                 } else {
                     if(choiceNum < 1 || choiceNum > 7){
-                    throw "Please enter a number between 1 and 7.";
+                        throw "Please enter a number between 1 and 7.";
+                    }
                 }
 
                 validChoice = true; // Valid choice made
@@ -631,11 +688,11 @@ while(gameRunning) {
                 } else if(choiceNum === 3) {
                     showInventory();
                 } else if(choiceNum === 4) {
-                    if(inventory.some(item => item.name === noteString) {
+                    if(inventory.some(item => item.name === noteString)) {
                         console.log("You look around the house. Nothing to be found, really.");
                     }
                     
-                    if(!inventory.some(item => item.name === noteString) {
+                    if(!inventory.some(item => item.name === noteString)) {
                         console.log("You look around the house. Soft sunlight seeps in through the windows. On the table lies a note.");
                         console.log("NEW ITEM COLLECTED.");
                         // Add note object to inventory instead of just the name
@@ -652,6 +709,7 @@ while(gameRunning) {
                     console.log("\nInvalid choice. Please select a number between 1 - 7.");
                 }
             } else if(currentLocation === "Woodlands") {
+				// Part two
 				if(choiceNum < 1 || choiceNum > 8) {
                     throw "Please enter a number between 1 and 8";
 				}
@@ -673,6 +731,53 @@ while(gameRunning) {
 					console.log("\nInvalid choice. Please select a number between 1 - 8.");
 				}
 				
+			} else if(currentLocation === "Woodlands - Part 2") {
+				if(choiceNum < 1 || choiceNum > 6) {
+                    throw "Please enter a number between 1 and 6";
+				}
+				validChoice = true; // Valid choice made
+				if(choiceNum === 1) {
+					move(choiceNum);
+				} else if(choiceNum === 2) {
+					showStatus();
+				} else if(choiceNum === 3) {
+					showInventory();
+				} else if(choiceNum === 4) {
+					useItem();
+				} else if(choiceNum === 5) {
+					showHelp();
+				} else if(choiceNum === 6) {
+					gameRunning = false;
+					console.log("Farewell, traveller.");
+				} else {
+					console.log("\nInvalid choice. Please select a number between 1 - 6.");
+				}
+			} else if(currentLocation === "Woodlands - Part 3 (Finale)" {
+				if(choiceNum < 1 || choiceNum > 7) {
+	                    throw "Please enter a number between 1 and 7";
+					}
+				validChoice = true; // Valid choice made
+				if(choiceNum === 1) {
+					console.log("You go over to the tree and see a scroll at its base, tied with a satin ribbon that a little pink blossom charm dangles from.");
+					console.log("NEW ITEM COLLECTED.");
+					// Add scroll object to inventory instead of just the name
+					inventory.push({...blossomScroll});
+				} else if(choiceNum === 2) {
+					// We'll come back to this later
+				} else if(choiceNum === 3) {
+					showStatus();
+				} else if(choiceNum === 4) {
+					showInventory();
+				} else if(choiceNum === 5) {
+					useItem();
+				} else if(choiceNum === 6) {
+					showHelp();
+				} else if(choiceNum === 7) {
+					gameRunning = false;
+					console.log("Farewell, traveller.");
+				} else {
+					console.log("\nInvalid choice. Please select a number between 1 - 7.");
+				}
 			}
 
         }  catch(error) {
