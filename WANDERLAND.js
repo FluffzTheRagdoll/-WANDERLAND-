@@ -117,7 +117,7 @@ function showStatus() {
 }
 
 // Function for displaying location description and available choices
-function showLocation() {
+function showLocation(location) {
     if(currentLocation === "Cherry Blossom Gardens") {
         console.log("\n:..✿ ∞CHERRY BLOSSOM GARDENS∞ ✿..:");
         console.log("You're in a quiet, serene garden with cherry blossom trees on either side of the sandy gravel path you're standing on. The path forks ahead into two.");
@@ -151,7 +151,7 @@ function showLocation() {
         console.log("_-+°ₒ❀VILLAGE❀ₒ°+-_");
         console.log("You follow the second path to the village centre. There are small houses spread out onto a patch of sandy gravel. Grass surrounds the area, and all is quiet. There are wooden stalls set up in the corners, but one in particular catches your eye.");
         
-        if(canExitVillageCentre = true) {
+        if(canExitVillageCentre === true) {
             console.log("1: Return to the cherry blossom gardens");
             console.log("2: Go over to a stall and buy a healing potion (costs 8 gold)");
             console.log("3: Check status");
@@ -181,6 +181,8 @@ function showLocation() {
         console.log("6: Get help");
         console.log("7: Quit game");
     }
+} else if(currentLocation === "Woodlands") {
+    
 }
 
 // Function to help users understand what's going on
