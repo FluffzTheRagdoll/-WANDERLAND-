@@ -276,7 +276,15 @@ function move(choiceNum) {
 		if(choiceNum === 1) {
 			currentLocation = "Village Centre";
 			console.log("You return to the village centre.");
-		} else if(currentLocation) // Continue this!
+		} else if(choiceNum === 2) {
+			console.log("You walk on, further and further. Nothing of significance seems to be in sight. Then, you finally reach somewhere.");
+			console.log("A gushing river streams through the grass. A wooden bridge arches above it. Trees, with leaves of golden and pink, surround the area.");
+		} else if(choiceNum === 3) {
+			console.log("You follow the sandy path further and further. The path keeps on going, so you do too. Eventually, though, after what seems like eternity, the path fades away.");
+			console.log("Upon looking up, you see a tree, its trunk is dark and withered. The leaves on its crooked branches are dark and pointed. But what stands out the most is the symbol etched into the tree's bark. Wings. With rings and the outline of a glow around them. But... the wings are broken.");
+			console.log("Behind the tree is a forest of more trees, dark and foreboding. A breeze sifts through, causing the branches to creak awfully.");
+			currentLocation = "The Dark Forest";
+		}
 	}
 
 return validMove;    
@@ -524,7 +532,6 @@ while(gameRunning) {
                 } else if(choiceNum === 4) {
                     showStatus();
                 } else if(choiceNum === 5) {
-                    // Inventory check
                     showInventory();
                 } else if(choiceNum === 6) {
                     useItem();
@@ -644,7 +651,29 @@ while(gameRunning) {
                 } else {
                     console.log("\nInvalid choice. Please select a number between 1 - 7.");
                 }
-            }
+            } else if(currentLocation === "Woodlands") {
+				if(choiceNum < 1 || choiceNum > 8) {
+                    throw "Please enter a number between 1 and 8";
+				}
+				validChoice = true; // Valid choice made
+				if(choiceNum <= 3) {
+					move(choiceNum);
+				} else if(choiceNum === 4) {
+					showStatus();
+				} else if(choiceNum === 5) {
+					showInventory();
+				} else if(choiceNum === 6) {
+					useItem();
+				} else if(choiceNum === 7){
+					showHelp();
+				} else if(choiceNum === 8) {
+					gameRunning = false;
+					console.log("Farewell, traveller.");
+				} else {
+					console.log("\nInvalid choice. Please select a number between 1 - 8.");
+				}
+				
+			}
 
         }  catch(error) {
             console.log("\nError: " + error);
