@@ -217,6 +217,17 @@ function showLocation(location) {
 		console.log("5: Use item");
 		console.log("6: Get help");
 		console.log("7: Quit game");
+	} else if(currentLocation === "The Dark Forest") {
+		console.log("\n.•✥⍋+THE DARK FOREST+⍋✥•.");
+		console.log("The forest is dark. You can't see very deep into the mass of trees. Who knows what could be in there...");
+
+		console.log("\n1: Head inside the forest");
+		console.log("2: Turn around and leave");
+		console.log("3: Check status");
+		console.log("4: Check inventory");
+		console.log("5: Use item");
+		console.log("6: Get help");
+		console.log("7: Quit game");
 	}
 }
 
@@ -225,33 +236,33 @@ function showHelp() {
     console.log("\n┈┈┈┈﹤｡ AVAILABLE COMMANDS ｡﹥┈┈┈┈");
 
     console.log("\nMovement Commands:");
-    console.log("When in the cherry blossom gardens, choose 1-3 to move between locations.");
-    console.log("In the blacksmith, village centre and house, choose 1 to return to the cherry blossom gardens.");
-	console.log("In the woodlands, choose 1 to return to the village centre.");
-	console.log("In other locations, there will be various options that lead you to new areas.");
+    console.log("- When in the cherry blossom gardens, choose 1-3 to move between locations.");
+    console.log("- In the blacksmith, village centre and house, choose 1 to return to the cherry blossom gardens.");
+	console.log("- In the woodlands, choose 1 to return to the village centre.");
+	console.log("- In other locations, there will be various options that lead you to new areas.");
 
     console.log("\nBattle Commands:");
-    console.log("In order to win a battle, you need a sword.");
-    console.log("You must fight monsters tactfully, as every choice impacts the fate of the battle.");
-    console.log("You will lose the battle if you have no weapon.");
+    console.log("- In order to win a battle, you need a sword.");
+    console.log("- You must fight monsters tactfully, as every choice impacts the fate of the battle.");
+    console.log("- You will lose the battle if you have no weapon.");
 
     console.log("\nItem Usage:");
-    console.log("You can buy weapons and armour at the blacksmith.");
-    console.log("You can buy a healing potion at one of the stalls in the the village centre.");
-    console.log("Other items can be collected in various locations across the map.");
-    console.log("The healing potion can be used to restore 30 health if you suffer damage.");
+    console.log("- You can buy weapons and armour at the blacksmith.");
+    console.log("- You can buy a healing potion at one of the stalls in the the village centre.");
+    console.log("- Other items can be collected in various locations across the map.");
+    console.log("- The healing potion can be used to restore 30 health if you suffer damage.");
 
     console.log("\nOther Commands:");
-    console.log("Choose the status option to view your health, location and gold.");
-    console.log("Choose the inventory option to view items you have collected.");
-	console.log("Choose the use item option to use items from your inventory, or to view scrolls and notes.");
-    console.log("Choose the help option to see these messages again.");
-    console.log("Choose the quit option to end the game.");
+    console.log("- Choose the status option to view your health, location and gold.");
+    console.log("- Choose the inventory option to view items you have collected.");
+	console.log("- Choose the use item option to use items from your inventory, or to view scrolls and notes.");
+    console.log("- Choose the help option to see these messages again.");
+    console.log("- Choose the quit option to end the game.");
 
     console.log("\nTips");
-    console.log("Save healing potions for dangerous situations.");
-    console.log("Defeating monsters earns you [insert]");
-    console.log("Each monster has specific weaknesses, which affects the outcome of battles. Find scrolls to learn more about various monsters.");
+    console.log("- Save healing potions for dangerous situations.");
+    console.log("- Defeating monsters earns you [insert]");
+    console.log("- Each monster has specific weaknesses, which affects the outcome of battles. Find scrolls to learn more about various monsters.");
 }
 
 /*-----MOVING AROUND THE MAP-----
@@ -313,12 +324,19 @@ function move(choiceNum) {
 			currentLocation = "The Dark Forest";
 		}
 	} else if(currentLocation === "Woodlands - Part 2") {
-		if(currentLocation === 1) {
+		if(choiceNum === 1) {
 			console.log("You start to cross the bridge, but stop briefly in once you're in the middle to glance down at the river. The sounds of the water rushing and the leaves rustling makes you feel calm. You continue and make it to the other side.");
 			currentLocation = "Woodlands - Part 3 (Finale)";
 		}
 	} else if(currentLocation === "Woodlands - Part 3 (Finale)") {
 		console.log("You walk on. Dappled sunlight comes down through the canopy of trees above. A soft breeze passes by. Eventually, you see something glinting at the base of a tree.");
+	} else if(currentLocation === "The Dark Forest") {
+		if(choiceNum === 1) {
+			console.log("You walk into the forest. Every shadow seems to hide something... All is quiet as you go on.");
+		} else if(choiceNum === 2) {
+			console.log("You turn around and walk away from the forest. The strange sounds fade away. But suddenly, a dark creature slides up to you and rises like a cobra. Its face morphs terrifyingly as its many eyes bore into your soul. Before you can do anything, it leaps forward and sinks its razor-sharp teeth into you.");
+			updateHealth(0);
+		}
 	}
 
 return validMove;    
