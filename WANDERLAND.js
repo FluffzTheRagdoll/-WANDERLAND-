@@ -229,7 +229,7 @@ function showLocation(location) {
 		console.log("6: Get help");
 		console.log("7: Quit game");
 	} else if(currentLocation === "Woodlands - Clearing") {
-		console.log("\n1: "); // Continue here!
+		console.log("\n1: ");
 	}
 }
 
@@ -334,15 +334,20 @@ function move(choiceNum) {
 		console.log("You walk on. Dappled sunlight comes down through the canopy of trees above. A soft breeze passes by. Eventually, you see something glinting at the base of a tree.");
 		if(choiceNum === 2) {
 			console.log("You ignore the glinting object and keep walking. Soon enough, you reach a clearing.");
-			currentLocation === "Woodlands - Clearing");
+			currentLocation === "Woodlands - Clearing";
 		}
 	} else if(currentLocation === "The Dark Forest") {
 		if(choiceNum === 1) {
 			console.log("You walk into the forest. Every shadow seems to hide something... All is quiet as you go on.");
 		} else if(choiceNum === 2) {
 			console.log("You turn around and walk away from the forest. The strange sounds fade away. But suddenly, a dark creature slides up to you and rises like a cobra. Its face morphs terrifyingly as its many eyes bore into your soul. Before you can do anything, it leaps forward and sinks its razor-sharp teeth into you.");
-			updateHealth(0);
+			updateHealth(-100);
 		}
+	} else if(currentLocation === "Woodlands - Clearing") {
+		console.log("An owl swoops down, circling a few times before landing on the branch of a tree. You recognise it from earlier. The owl tilts its head and stares at you. 'So you made it this far.' It hoots thoughtfully.");
+		console.log("Suddenly, the ground starts to shake. You turn around to see a dragon-like monster with pointed wings and a sharp snout approaching you. Its long tail drags across the ground. You notice the flower patterns on the monster's light pink body. The owl, still perched on its branch, stays still, but glances at you.");
+		console.log("The monster comes closer still, and then stops. It opens its large mouth and screeches loudly at you, bringing its razor-sharp teeth into view.");
+		
 	}
 
 return validMove;    
@@ -414,6 +419,7 @@ function useItem() {
 			console.log("ᴏɴᴇ ᴛʜᴀᴛ ɢʀᴏᴡs ᴡɪᴛʜᴏᴜᴛ ᴛʜᴇ sᴜɴ");
 			console.log("ᴀ sʟɪɢʜᴛ ᴛᴏᴜᴄʜ ᴏғ sᴘᴀʀᴋʟᴇ,");
 			console.log("ɪɴ ɪᴛs ᴍɪsᴇʀᴀʙʟᴇ ᴄʜᴀʀᴍ'");
+			// Insert emoji: cherry blossom (with another console.log, with whitespace on either sides until it's centered)
 			return true;
 		}
         
@@ -448,7 +454,7 @@ function showInventory() {
 function updateHealth(amount) {
     playerHealth += amount;
 
-    if(amount <= 100) {
+    if(amount >= 100) {
         playerHealth = 100;
         console.log("You're at full health again.");
     }
@@ -569,6 +575,13 @@ function buyFromVillageStalls() {
     } else if(playerGold <= 8 && !inventory.some(item => item.name === healingPotionString)) {
         console.log("You don't have enough gold to buy the potion. You feel it would be wrong to take it without paying, so you leave the magic mixture alone. You think, 'Perhaps I can come back later when the seller is here. Then I could haggle a bit...'");
     }
+}
+
+/*-----COMBAT FUNCTIONS-----
+*/
+function handleCombat() {
+	let inBattle = true;
+	// Continue this!
 }
 
 // ---------------------------
@@ -832,7 +845,8 @@ while(gameRunning) {
 
         // Check if the player died
         if(playerHealth <= 0) {
-            console.log("\nYou... died. Farewell traveller, until another time.") //Insert emoji: wings
+            console.log("\nYou... died. Farewell traveller, until another time.") // Insert emoji: wings
+			gameRunning = false;
         }
     }
 }
