@@ -228,6 +228,8 @@ function showLocation(location) {
 		console.log("5: Use item");
 		console.log("6: Get help");
 		console.log("7: Quit game");
+	} else if(currentLocation === "Woodlands - Clearing") {
+		console.log("\n1: "); // Continue here!
 	}
 }
 
@@ -330,6 +332,10 @@ function move(choiceNum) {
 		}
 	} else if(currentLocation === "Woodlands - Part 3 (Finale)") {
 		console.log("You walk on. Dappled sunlight comes down through the canopy of trees above. A soft breeze passes by. Eventually, you see something glinting at the base of a tree.");
+		if(choiceNum === 2) {
+			console.log("You ignore the glinting object and keep walking. Soon enough, you reach a clearing.");
+			currentLocation === "Woodlands - Clearing");
+		}
 	} else if(currentLocation === "The Dark Forest") {
 		if(choiceNum === 1) {
 			console.log("You walk into the forest. Every shadow seems to hide something... All is quiet as you go on.");
@@ -770,7 +776,7 @@ while(gameRunning) {
 				} else {
 					console.log("\nInvalid choice. Please select a number between 1 - 6.");
 				}
-			} else if(currentLocation === "Woodlands - Part 3 (Finale)" {
+			} else if(currentLocation === "Woodlands - Part 3 (Finale)") {
 				if(choiceNum < 1 || choiceNum > 7) {
 	                    throw "Please enter a number between 1 and 7";
 					}
@@ -781,7 +787,28 @@ while(gameRunning) {
 					// Add scroll object to inventory instead of just the name
 					inventory.push({...blossomScroll});
 				} else if(choiceNum === 2) {
-					// We'll come back to this later
+					move(choiceNum);
+				} else if(choiceNum === 3) {
+					showStatus();
+				} else if(choiceNum === 4) {
+					showInventory();
+				} else if(choiceNum === 5) {
+					useItem();
+				} else if(choiceNum === 6) {
+					showHelp();
+				} else if(choiceNum === 7) {
+					gameRunning = false;
+					console.log("Farewell, traveller.");
+				} else {
+					console.log("\nInvalid choice. Please select a number between 1 - 7.");
+				}
+			} else if(currentLocation === "The Dark Forest") {
+				if(choiceNum < 1 || choiceNum > 7) {
+					throw "Please enter a number between 1 and 7";
+				}
+				validChoice = true; // Valid choice made
+				if(choiceNum <= 2) {
+					move(choiceNum);
 				} else if(choiceNum === 3) {
 					showStatus();
 				} else if(choiceNum === 4) {
