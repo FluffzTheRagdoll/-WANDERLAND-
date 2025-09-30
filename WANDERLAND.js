@@ -217,6 +217,13 @@ function showLocation(location) {
 		console.log("5: Use item");
 		console.log("6: Get help");
 		console.log("7: Quit game");
+	} else if(currentLocation === "Woodlands - Part 3 (Finale Mini-section)") {
+		console.log("\n1: Walk onwards");
+		console.log("2: Check status");
+		console.log("3: Check inventory");
+		console.log("4: Use item");
+		console.log("5: Get help");
+		console.log("6: Quit game");
 	} else if(currentLocation === "The Dark Forest") {
 		console.log("\n.•✥⍋+THE DARK FOREST+⍋✥•.");
 		console.log("The forest is dark. You can't see very deep into the mass of trees. Who knows what could be in there...");
@@ -228,8 +235,6 @@ function showLocation(location) {
 		console.log("5: Use item");
 		console.log("6: Get help");
 		console.log("7: Quit game");
-	} else if(currentLocation === "Woodlands - Clearing") {
-		console.log("\n1: ");
 	}
 }
 
@@ -332,9 +337,16 @@ function move(choiceNum) {
 		}
 	} else if(currentLocation === "Woodlands - Part 3 (Finale)") {
 		console.log("You walk on. Dappled sunlight comes down through the canopy of trees above. A soft breeze passes by. Eventually, you see something glinting at the base of a tree.");
-		if(choiceNum === 2) {
-			console.log("You ignore the glinting object and keep walking. Soon enough, you reach a clearing.");
-			currentLocation === "Woodlands - Clearing";
+		if(choiceNum === 1) {
+			currentLocation = "Woodlands - Part 3 (Finale Mini-section)";
+		} else if(choiceNum === 2) {
+			console.log("You ignore the glinting object and keep going. Eventually, you reach a clearing.");
+			currentLocation = "Woodlands - Clearing";
+		}
+	} else if(currentLocation === "Woodlands - Part 3 (Finale Mini-section)") {
+		if(choiceNum === 1) {
+			currentLocation = "Woodlands - Clearing";
+			console.log("You keep going. Eventually, you reach a clearing.");
 		}
 	} else if(currentLocation === "The Dark Forest") {
 		if(choiceNum === 1) {
@@ -835,6 +847,27 @@ while(gameRunning) {
 					console.log("Farewell, traveller.");
 				} else {
 					console.log("\nInvalid choice. Please select a number between 1 - 7.");
+				}
+			} else if(currentLocation === "Woodlands - Part 3 (Finale Mini-section)") {
+				if(choiceNum < 1 || choiceNum > 6) {
+					throw "Please enter a number between 1 - 6";
+				}
+				validChoice = true; // Valid choice made
+				if(choiceNum === 1) {
+					move(choiceNum);
+				} else if(choiceNum === 2) {
+					showStatus();
+				} else if(choiceNum === 3) {
+					showInventory();
+				} else if(choiceNum === 4) {
+					useItem();
+				} else if(choiceNum === 5) {
+					showHelp();
+				} else if(choiceNum === 6) {
+					gameRunning = false;
+					console.log("Farewell, traveller.");
+				} else {
+					console.log("\nInvalid choice. Please select a number between 1 - 6");
 				}
 			}
 
