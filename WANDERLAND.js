@@ -652,34 +652,16 @@ while(gameRunning) {
                         throw "Please enter a number between 1 and 8.";
                     }
 
-                    validChoice = true; // Valid choice made    
-                    if(choiceNum === 1) {
-                        move(choiceNum);
-                    } else if(choiceNum === 2) {
-                        buyFromVillageStalls();
-                    } else if(choiceNum === 3) {
-                        showStatus();
-                    } else if(choiceNum === 4) {
-                        showInventory();
-                    } else if(choiceNum === 5) {
-                        move(choiceNum);
-                    } else if(choiceNum === 6) {
-                        useItem();
-                    } else if(choiceNum === 7) {
-                        showHelp();
-                    } else if(choiceNum === 8) {
-                        gameRunning = false;
-                        console.log("Farewell, traveller.");
-                    } else {
-                        console.log("\nInvalid choice. Please select a number between 1 - 8.");
-                    }
+                    validChoice = true; // Valid choice made
+
                 } else {
                     if(choiceNum < 1 || choiceNum > 7){
                         throw "Please enter a number between 1 and 7.";
                     }
+
+                    validChoice = true; // Valid choice made
                 }
 
-                validChoice = true; // Valid choice made
                 if(choiceNum === 1) {
                     move(choiceNum);
                 } else if(choiceNum === 2) {
@@ -689,14 +671,37 @@ while(gameRunning) {
                 } else if(choiceNum === 4) {
                     showInventory();
                 } else if(choiceNum === 5) {
-                    useItem();
+                    if(canExitVillageCentre === true) {
+                        move(choiceNum);
+                    } else {
+                        useItem();
+                    }
                 } else if(choiceNum === 6) {
-                    showHelp();
+                    if(canExitVillageCentre === true) {
+                        useItem();
+                    } else {
+                        showHelp();
+                    }
                 } else if(choiceNum === 7) {
-                    gameRunning = false;
-                    console.log("Farewell, traveller.");
+                    if(canExitVillageCentre === true) {
+                        showHelp();
+                    } else {
+                        gameRunning = false;
+                        console.log("Farewell, traveller.");
+                    }
+                } else if(choiceNum === 8) {
+                    if(canExitVillageCentre === true) {
+                        gameRunning = false;
+                        console.log("Farewell, traveller.");
+                    } else {
+                        console.log("\nInvalid choice. Please select a number between 1 - 7.");
+                    }
                 } else {
-                    console.log("\nInvalid choice. Please select a number between 1 - 7.");
+                    if(canExitVillageCentre === true) {
+                        console.log("\nInvalid choice. Please select a number between 1 - 8.");
+                    } else {
+                        console.log("\nInvalid choice. Please select a number between 1 - 7.");
+                    }
                 }
             } else if(currentLocation === "Your house") {
                 if(choiceNum < 1 || choiceNum > 7) {
@@ -833,6 +838,7 @@ while(gameRunning) {
         // Check if the player died
         if(playerHealth <= 0) {
             console.log("\nYou... died. Farewell traveller, until another time.") //Insert emoji: wings
+            gameRunning = false;
         }
     }
 }
