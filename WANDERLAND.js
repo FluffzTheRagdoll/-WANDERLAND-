@@ -217,13 +217,6 @@ function showLocation(location) {
 		console.log("5: Use item");
 		console.log("6: Get help");
 		console.log("7: Quit game");
-	} else if(currentLocation === "Woodlands - Part 3 (Finale Mini-section)") {
-		console.log("\n1: Walk onwards");
-		console.log("2: Check status");
-		console.log("3: Check inventory");
-		console.log("4: Use item");
-		console.log("5: Get help");
-		console.log("6: Quit game");
 	} else if(currentLocation === "The Dark Forest") {
 		console.log("\n.•✥⍋+THE DARK FOREST+⍋✥•.");
 		console.log("The forest is dark. You can't see very deep into the mass of trees. Who knows what could be in there...");
@@ -235,6 +228,8 @@ function showLocation(location) {
 		console.log("5: Use item");
 		console.log("6: Get help");
 		console.log("7: Quit game");
+	} else if(currentLocation === "Woodlands - Clearing") {
+		console.log("\n1: "); // Continue here!
 	}
 }
 
@@ -337,16 +332,9 @@ function move(choiceNum) {
 		}
 	} else if(currentLocation === "Woodlands - Part 3 (Finale)") {
 		console.log("You walk on. Dappled sunlight comes down through the canopy of trees above. A soft breeze passes by. Eventually, you see something glinting at the base of a tree.");
-		if(choiceNum === 1) {
-			currentLocation = "Woodlands - Part 3 (Finale Mini-section)";
-		} else if(choiceNum === 2) {
-			console.log("You ignore the glinting object and keep going. Eventually, you reach a clearing.");
+		if(choiceNum === 2) {
+			console.log("You ignore the glinting object and keep walking. Soon enough, you reach a clearing.");
 			currentLocation = "Woodlands - Clearing";
-		}
-	} else if(currentLocation === "Woodlands - Part 3 (Finale Mini-section)") {
-		if(choiceNum === 1) {
-			currentLocation = "Woodlands - Clearing";
-			console.log("You keep going. Eventually, you reach a clearing.");
 		}
 	} else if(currentLocation === "The Dark Forest") {
 		if(choiceNum === 1) {
@@ -354,12 +342,8 @@ function move(choiceNum) {
 		} else if(choiceNum === 2) {
 			console.log("You turn around and walk away from the forest. The strange sounds fade away. But suddenly, a dark creature slides up to you and rises like a cobra. Its face morphs terrifyingly as its many eyes bore into your soul. Before you can do anything, it leaps forward and sinks its razor-sharp teeth into you.");
 			updateHealth(-100);
+            return false;
 		}
-	} else if(currentLocation === "Woodlands - Clearing") {
-		console.log("An owl swoops down, circling a few times before landing on the branch of a tree. You recognise it from earlier. The owl tilts its head and stares at you. 'So you made it this far.' It hoots thoughtfully.");
-		console.log("Suddenly, the ground starts to shake. You turn around to see a dragon-like monster with pointed wings and a sharp snout approaching you. Its long tail drags across the ground. You notice the flower patterns on the monster's light pink body. The owl, still perched on its branch, stays still, but glances at you.");
-		console.log("The monster comes closer still, and then stops. It opens its large mouth and screeches loudly at you, bringing its razor-sharp teeth into view.");
-		
 	}
 
 return validMove;    
@@ -431,7 +415,6 @@ function useItem() {
 			console.log("ᴏɴᴇ ᴛʜᴀᴛ ɢʀᴏᴡs ᴡɪᴛʜᴏᴜᴛ ᴛʜᴇ sᴜɴ");
 			console.log("ᴀ sʟɪɢʜᴛ ᴛᴏᴜᴄʜ ᴏғ sᴘᴀʀᴋʟᴇ,");
 			console.log("ɪɴ ɪᴛs ᴍɪsᴇʀᴀʙʟᴇ ᴄʜᴀʀᴍ'");
-			// Insert emoji: cherry blossom (with another console.log, with whitespace on either sides until it's centered)
 			return true;
 		}
         
@@ -473,8 +456,7 @@ function updateHealth(amount) {
 
     if(amount <= 0) {
         playerHealth = 0;
-        console.log("Your health reached zero...")
-        console.log("\nLooks like that's the end of things.")
+        console.log("\nLooks like that's the end of things.");
     }
 
     console.log("Your health is now: " + playerHealth);
@@ -587,13 +569,6 @@ function buyFromVillageStalls() {
     } else if(playerGold <= 8 && !inventory.some(item => item.name === healingPotionString)) {
         console.log("You don't have enough gold to buy the potion. You feel it would be wrong to take it without paying, so you leave the magic mixture alone. You think, 'Perhaps I can come back later when the seller is here. Then I could haggle a bit...'");
     }
-}
-
-/*-----COMBAT FUNCTIONS-----
-*/
-function handleCombat() {
-	let inBattle = true;
-	// Continue this!
 }
 
 // ---------------------------
@@ -848,27 +823,6 @@ while(gameRunning) {
 				} else {
 					console.log("\nInvalid choice. Please select a number between 1 - 7.");
 				}
-			} else if(currentLocation === "Woodlands - Part 3 (Finale Mini-section)") {
-				if(choiceNum < 1 || choiceNum > 6) {
-					throw "Please enter a number between 1 - 6";
-				}
-				validChoice = true; // Valid choice made
-				if(choiceNum === 1) {
-					move(choiceNum);
-				} else if(choiceNum === 2) {
-					showStatus();
-				} else if(choiceNum === 3) {
-					showInventory();
-				} else if(choiceNum === 4) {
-					useItem();
-				} else if(choiceNum === 5) {
-					showHelp();
-				} else if(choiceNum === 6) {
-					gameRunning = false;
-					console.log("Farewell, traveller.");
-				} else {
-					console.log("\nInvalid choice. Please select a number between 1 - 6");
-				}
 			}
 
         }  catch(error) {
@@ -878,8 +832,7 @@ while(gameRunning) {
 
         // Check if the player died
         if(playerHealth <= 0) {
-            console.log("\nYou... died. Farewell traveller, until another time.") // Insert emoji: wings
-			gameRunning = false;
+            console.log("\nYou... died. Farewell traveller, until another time.") //Insert emoji: wings
         }
     }
 }
