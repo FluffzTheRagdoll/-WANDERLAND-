@@ -25,6 +25,7 @@ console.log("\nYou start with " + playerGold + " gold. Good luck with your journ
 // Game state variables
 let gameRunning = true;
 let currentLocation = "Cherry Blossom Gardens";
+let currentLocationForPlayer = "Cherry Blossom Gardens";
 let firstVisit = true;
 
 // Extra game state variables
@@ -43,8 +44,6 @@ const healingPotion = {
     effect: 30,    // Healing amount
     description: "Restores 30 health"
 };
-
-let healingPotionString = "Healing potion"; // For checking if the item is present in inventory
 
 const sword = {
     name: "Sword",
@@ -121,7 +120,7 @@ function showStatus() {
     console.log("\n•┈┈ ┈" + playerName + "'s status" + "┈ ┈┈•");
     console.log("Health: " + playerHealth); //insert emoji (start): pink heart
     console.log("Gold: " + playerGold); //insert emoji (start): coin
-    console.log("Location: " + currentLocation); //insert emoji (start): round pushpin
+    console.log("Location: " + currentLocationForPlayer); //insert emoji (start): round pushpin
 }
 
 // Function for displaying location description and available choices
@@ -210,6 +209,8 @@ function showLocation(location) {
 		console.log("5: Get help");
 		console.log("6: Quit game");
 	} else if(currentLocation === "Woodlands - Part 3 (Finale)") {
+        console.log("You walk on. Dappled sunlight comes down through the canopy of trees above. A soft breeze passes by. Eventually, you see something glinting at the base of a tree.");
+
 		console.log("\n1: Check out the glinting object");
 		console.log("2: Keep going");
 		console.log("3: Check status");
@@ -217,7 +218,14 @@ function showLocation(location) {
 		console.log("5: Use item");
 		console.log("6: Get help");
 		console.log("7: Quit game");
-	} else if(currentLocation === "The Dark Forest") {
+	} else if(currentLocation === "Woodlands - Part 3 (Mini-finale)") {
+        console.log("\n1: Continue walking");
+        console.log("2: Check status");
+        console.log("3: Check inventory");
+        console.log("4: Use item");
+        console.log("5: Get help");
+        console.log("6: Quit game");
+    } else if(currentLocation === "The Dark Forest") {
 		console.log("\n.•✥⍋+THE DARK FOREST+⍋✥•.");
 		console.log("The forest is dark. You can't see very deep into the mass of trees. Who knows what could be in there...");
 
@@ -231,6 +239,44 @@ function showLocation(location) {
 	} else if(currentLocation === "Woodlands - Clearing") {
 		console.log("\n1: "); // Continue here!
 	}
+}
+
+// Function for updating current location for player display
+function updateCurrentLocationForPlayer() {
+    switch(currentLocation) {
+        case "Cherry Blossom Gardens":
+            currentLocationForPlayer = "Cherry Blossom Gardens";
+            break;
+        case "Blacksmith":
+            currentLocationForPlayer = "Blacksmith";
+            break;
+        case "Village Centre":
+            currentLocationForPlayer = "Village Centre";
+            break;
+        case "Your house":
+            currentLocationForPlayer = "Your house";
+            break;
+        case "Woodlands":
+            currentLocationForPlayer = "Woodlands";
+            break;
+        case "Woodlands - Part 2":
+            currentLocationForPlayer = "Woodlands";
+            break;
+        case "Woodlands - Part 3 (Finale)":
+            currentLocationForPlayer = "Woodlands";
+            break;
+        case "Woodlands - Part 3 (Mini-finale)":
+            currentLocationForPlayer = "Woodlands";
+            break;
+        case "Woodlands - Clearing":
+            currentLocationForPlayer = "Woodlands";
+            break;
+        case "The Dark Forest":
+            currentLocationForPlayer = "The Dark Forest";
+            break;
+        default:
+            currentLocationForPlayer = currentLocation;
+    }
 }
 
 // Function to help users understand what's going on
@@ -277,34 +323,44 @@ function move(choiceNum) {
         if(choiceNum === 1) {
             currentLocation = "Blacksmith";
             console.log("\nYou follow the first path and enter the blacksmith's shop.");
+            updateCurrentLocationForPlayer();
             validMove = true;
         } else if(choiceNum === 2) {
             currentLocation = "Village Centre";
             console.log("\nYou follow the second path and enter the village centre.");
+            updateCurrentLocationForPlayer();
             validMove = true;
         } else if(choiceNum === 3) {
             currentLocation = "Your house";
             console.log("\nYou turn around and enter your house.");
+            updateCurrentLocationForPlayer();
             validMove = true;
         }
     } else if(currentLocation === "Blacksmith"){
         if(choiceNum === 1) {
             currentLocation = "Cherry Blossom Gardens";
             console.log("You return to the cherry blossom gardens.");
+            updateCurrentLocationForPlayer();
             validMove = true;
         }
     } else if(currentLocation === "Village Centre") {
         if(choiceNum === 1) {
             currentLocation = "Cherry Blossom Gardens";
             console.log("You return to the cherry blossom gardens.");
+            updateCurrentLocationForPlayer();
+            validMove = true;
         } else if(canExitVillageCentre === true && choiceNum === 5) {
 			currentLocation = "Woodlands";
 			console.log("You walk into the grass surrounding the village.");
+            updateCurrentLocationForPlayer();
+            validMove = true;
 		}
     } else if(currentLocation === "Your house") {
         if(choiceNum === 1) {
             currentLocation = "Cherry Blossom Gardens";
             console.log("You return to the cherry blossom gardens.");
+            updateCurrentLocationForPlayer();
+            validMove = true;
             if(firstHouseVisit === true) {
                 console.log("Outside your house, you spot a strange glow from somewhere in the grass. Upon walking over, you see a familiar sign indented in the soil. Wings, with rings and the outline of a glow around them. Strange...");
                 firstHouseVisit = false;
@@ -315,28 +371,50 @@ function move(choiceNum) {
 		if(choiceNum === 1) {
 			currentLocation = "Village Centre";
 			console.log("You return to the village centre.");
+            updateCurrentLocationForPlayer();
+            validMove = true;
 		} else if(choiceNum === 2) {
 			console.log("You walk on, further and further. Nothing of significance seems to be in sight. Then, you finally reach somewhere.");
 			console.log("A gushing river streams through the grass. A wooden bridge arches above it. Trees, with leaves of golden and pink, surround the area.");
 			currentLocation = "Woodlands - Part 2";
+            updateCurrentLocationForPlayer();
+            validMove = true;
 		} else if(choiceNum === 3) {
 			console.log("You follow the sandy path further and further. The path keeps on going, so you do too. Eventually, though, after what seems like eternity, the path fades away.");
 			console.log("Upon looking up, you see a tree, its trunk is dark and withered. The leaves on its crooked branches are dark and pointed. But what stands out the most is the symbol etched into the tree's bark. Wings. With rings and the outline of a glow around them. But... the wings are broken.");
 			console.log("Behind the tree is a forest of more trees, dark and foreboding. A breeze sifts through, causing the branches to creak awfully.");
 			currentLocation = "The Dark Forest";
+            updateCurrentLocationForPlayer();
+            validMove = true;
 		}
 	} else if(currentLocation === "Woodlands - Part 2") {
 		if(choiceNum === 1) {
 			console.log("You start to cross the bridge, but stop briefly in once you're in the middle to glance down at the river. The sounds of the water rushing and the leaves rustling makes you feel calm. You continue and make it to the other side.");
 			currentLocation = "Woodlands - Part 3 (Finale)";
+            updateCurrentLocationForPlayer();
+            validMove = true;
 		}
 	} else if(currentLocation === "Woodlands - Part 3 (Finale)") {
-		console.log("You walk on. Dappled sunlight comes down through the canopy of trees above. A soft breeze passes by. Eventually, you see something glinting at the base of a tree.");
-		if(choiceNum === 2) {
+        if(choiceNum === 1) {
+            console.log("You go over to the tree and see a scroll at its base, tied with a satin ribbon that a little pink blossom charm dangles from.");
+			console.log("NEW ITEM COLLECTED.");
+			// Add scroll object to inventory instead of just the name
+			inventory.push({...blossomScroll});
+            currentLocation = "Woodlands - Part 3 (Mini-finale)";
+            updateCurrentLocationForPlayer();
+            validMove = true;
+        } else if(choiceNum === 2) {
 			console.log("You ignore the glinting object and keep walking. Soon enough, you reach a clearing.");
 			currentLocation = "Woodlands - Clearing";
+            updateCurrentLocationForPlayer();
+            validMove = true;
 		}
-	} else if(currentLocation === "The Dark Forest") {
+	} else if(currentLocation === "Woodlands - Part 3 (Mini-finale)") {
+        if(choiceNum === 1) {
+            console.log("You continue onwards. Soon, you reach a clearing.");
+            currentLocation = "Woodlands - Clearing";
+        }
+    } else if(currentLocation === "The Dark Forest") {
 		if(choiceNum === 1) {
 			console.log("You walk into the forest. Every shadow seems to hide something... All is quiet as you go on.");
 		} else if(choiceNum === 2) {
@@ -447,7 +525,7 @@ function showInventory() {
 
 // Function for updating player health
 function updateHealth(amount) {
-    playerHealth += amount;
+    playerHealth = Math.max(0, Math.min(100, playerHealth + amount));
 
     if(amount >= 100) {
         playerHealth = 100;
@@ -514,7 +592,7 @@ function buyFromBlacksmith() {
             console.log("You already have blades.");
         }
         else if(!inventory.some(item => item.name === bladeString) && playerGold >= 3) {
-            playerGold -= blades.cost;
+            playerGold -= blade.cost;
             console.log("\nYou buy the " + blade.name + " for " + blade.cost + " gold.");
             console.log("Gold remaining: " + playerGold);
             inventory.push({...blade})
@@ -553,11 +631,11 @@ function buyFromBlacksmith() {
 }
 // Function for buying items at the stalls in the village centre
 function buyFromVillageStalls() {
-    if(inventory.some(item => item.name === healingPotionString)) {
+    if(hasItemType("potion")) {
         console.log("You already have a healing potion. You feel it unneeded to buy another one right now. Might as well use up your current potion first...");
     }
 
-    if(playerGold >= 8 && !inventory.some(item => item.name === healingPotionString)) {
+    if(playerGold >= 8 && !hasItemType("potion")) {
         console.log("You wait, but no one seems to be there at the stall. Finally, you decide to buy the potion anyway. You leave the gold at the stall, and take the healing potion.");
         playerGold -= healingPotion.cost;
         
@@ -566,7 +644,7 @@ function buyFromVillageStalls() {
 
         console.log("\nYou buy the " + healingPotion.name + " for " + healingPotion.cost + " gold.");
         console.log("Gold remaining: " + playerGold);
-    } else if(playerGold <= 8 && !inventory.some(item => item.name === healingPotionString)) {
+    } else if(playerGold <= 8 && !hasItemType("potion")) {
         console.log("You don't have enough gold to buy the potion. You feel it would be wrong to take it without paying, so you leave the magic mixture alone. You think, 'Perhaps I can come back later when the seller is here. Then I could haggle a bit...'");
     }
 }
@@ -783,15 +861,11 @@ while(gameRunning) {
 				}
 			} else if(currentLocation === "Woodlands - Part 3 (Finale)") {
 				if(choiceNum < 1 || choiceNum > 7) {
-	                    throw "Please enter a number between 1 and 7";
-					}
+	                throw "Please enter a number between 1 and 7";
+				}
 				validChoice = true; // Valid choice made
-				if(choiceNum === 1) {
-					console.log("You go over to the tree and see a scroll at its base, tied with a satin ribbon that a little pink blossom charm dangles from.");
-					console.log("NEW ITEM COLLECTED.");
-					// Add scroll object to inventory instead of just the name
-					inventory.push({...blossomScroll});
-				} else if(choiceNum === 2) {
+
+				if(choiceNum<= 2) {
 					move(choiceNum);
 				} else if(choiceNum === 3) {
 					showStatus();
@@ -807,7 +881,29 @@ while(gameRunning) {
 				} else {
 					console.log("\nInvalid choice. Please select a number between 1 - 7.");
 				}
-			} else if(currentLocation === "The Dark Forest") {
+			} else if(currentLocation === "Woodlands - Part 3 (Mini-finale)") {
+                if(choiceNum < 1 || choiceNum > 6) {
+	                throw "Please enter a number between 1 and 6";
+				}
+                validChoice = true; // Valid choice made
+
+                if(choiceNum === 1) {
+                    move(choiceNum);
+                } else if(choiceNum === 2) {
+                    showStatus();
+                } else if(choiceNum === 3) {
+                    showInventory();
+                } else if(choiceNum === 4) {
+                    useItem();
+                } else if(choiceNum === 5) {
+                    showHelp();
+                } else if(choiceNum === 6) {
+                    gameRunning = false;
+                    console.log("Farewell, traveller.");
+                } else {
+                    console.log("\nInvalid choice. Please select a number between 1 - 6.");
+                }
+            } else if(currentLocation === "The Dark Forest") {
 				if(choiceNum < 1 || choiceNum > 7) {
 					throw "Please enter a number between 1 and 7";
 				}
