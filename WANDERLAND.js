@@ -32,6 +32,10 @@ let firstVisit = true;
 let canExitVillageCentre = false;
 let firstHouseVisit = true;
 
+// Monster stats
+let soulWrencherHealth = 40;
+let soulWrencherDamage = 14;
+
 // Using an array as an inventory
 let inventory = [];
 
@@ -237,7 +241,17 @@ function showLocation(location) {
 		console.log("6: Get help");
 		console.log("7: Quit game");
 	} else if(currentLocation === "Woodlands - Clearing") {
-		console.log("\n1: "); // Continue here!
+		console.log("\nYou walk forward. All is silent. Then, there's a swoosh of wings and an owl lands on the branch of a tree. You recognise it from earlier. The owl tilts its head and looks at you.");
+        console.log("\nIn the distance, you hear a thudding sound. The owl doesn't move. The noise gets closer, and the ground begins to shake a little. Soon, a large creature stalks into sight. It has long limbs that end with inch-long claws. Its tail is long and spiny. Lethal-looking spikes cover its back and it has long, deadly teeth. Its burning white eyes bore into you.");
+        console.log("\nYour eyes dart over at the owl, who stays completely still. The monster then roars defeaningly, and you glimpse its sharp teeth. As it stalks closer to you, the patterns along its body shimmer a slight shade of cerise. The colour reminds you of venom.");
+
+        console.log("\n1: Run");
+        console.log("2: Fight the monster");
+        console.log("3: Check status");
+        console.log("4: Check inventory");
+        console.log("5: Use item");
+        console.log("6: Get help");
+        console.log("7: Quit game");
 	}
 }
 
@@ -269,6 +283,9 @@ function updateCurrentLocationForPlayer() {
             currentLocationForPlayer = "Woodlands";
             break;
         case "Woodlands - Clearing":
+            currentLocationForPlayer = "Woodlands";
+            break;
+        case "Woodlands - Chase Scene":
             currentLocationForPlayer = "Woodlands";
             break;
         case "The Dark Forest":
@@ -414,6 +431,11 @@ function move(choiceNum) {
             console.log("You continue onwards. Soon, you reach a clearing.");
             currentLocation = "Woodlands - Clearing";
         }
+    } else if(currentLocation === "Woodlands - Clearing") {
+        if(choiceNum === 1) {
+            console.log("You dash past the monster and swerve into the forest. The monster doesn't waste a moment. The ground shakes as it runs after you. You halt abruptly, because in front of you, are two paths.");
+            currentLocation = "Woodlands - Chase Scene";
+        }
     } else if(currentLocation === "The Dark Forest") {
 		if(choiceNum === 1) {
 			console.log("You walk into the forest. Every shadow seems to hide something... All is quiet as you go on.");
@@ -507,6 +529,29 @@ function hasItemType(type) {
     return inventory.some(item => item.type === type);
 }
 
+function getBestArmour() {
+    const items = getItemsByType("armour");
+    if(!items || items.length === 0) {
+        return null;
+    }
+
+    let bestArmour = items[0];
+    for(let i = 0; i < items.length; i++) {
+        if(items[i].effect > bestArmour.effect) {
+            bestArmour = items[i];
+        }
+    }
+
+    return bestArmour;
+}
+
+function hasGoodArmour() {
+    if(inventory.some("Silver Shield")) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 /*-----HANDLING CORE GAMEPLAY FUNCTIONS-----
 */
@@ -647,6 +692,50 @@ function buyFromVillageStalls() {
     } else if(playerGold <= 8 && !hasItemType("potion")) {
         console.log("You don't have enough gold to buy the potion. You feel it would be wrong to take it without paying, so you leave the magic mixture alone. You think, 'Perhaps I can come back later when the seller is here. Then I could haggle a bit...'");
     }
+}
+
+/*-----COMBAT FUNCTIONS-----
+*/
+
+// Function for handling combat
+function handleCombat(battleWith) {
+    let inBattle = true;
+    let chosenWeapon = null;
+
+    // Set monster stats
+    let monsterHealth;
+    let monsterDamage;
+
+    // Check which monster the player is battling
+    if(currentLocation === "Woodlands - Clearing" && battleWith === "The Soul Wrencher") {
+        monsterHealth = soulWrencherHealth;
+        monsterDamage = soulWrencherDamage;
+
+        // Check if the player has a weapon
+        if(hasItemType("weapon")) {
+            const weapons = getItemsByType("weapon");
+            let weaponChoice = readline.question("\nWhich weapon will you use? ");
+            weapons.forEach((weapon, index) => {
+                console.log((index + 1) + ". " + weapon.name + " - Damage: " + weapon.effect);
+            });
+            if(weaponChoice > weapons.length) {
+                console.log("Invalid choice. The Soul Wrencher takes advantage of your hesitation and dives forward. You move aside just in time, but not before its teeth scrape your shoulder.");
+                updateHealth(-monsterDamage);
+            }
+            
+            if(weaponChoice === 1) {
+                chosenWeapon = "Sword";
+                console.log("You pull your sword out of its sheath and leap at the monster. It reaches out to grab you with its long claws.");
+                if(hasItemType("armour")) {
+                    console.log("The Soul Wrencher's claws slam against your shield. It growls and narrows its eyes.");
+                } else {
+                    console.log("Before you can move, the monster's claws swipe at you and blood spray onto the ground.");
+                    updateHealth(-monsterDamage);
+                }
+            }
+        }
+    }
+    
 }
 
 // ---------------------------
@@ -924,7 +1013,30 @@ while(gameRunning) {
 				} else {
 					console.log("\nInvalid choice. Please select a number between 1 - 7.");
 				}
-			}
+			} else if(currentLocation === "Woodlands - Clearing") {
+                if(choiceNum < 1 || choiceNum > 7) {
+					throw "Please enter a number between 1 and 7";
+				}
+                validChoice = true; // Valid choice made
+                if(choiceNum === 1) {
+                    move(choiceNum);
+                } else if(choiceNum === 2) {
+                    handleCombat("The Soul Wrencher");
+                } else if(choiceNum === 3) {
+                    showStatus();
+                } else if(choiceNum === 4) {
+                    showInventory();
+                } else if(choiceNum === 5) {
+                    useItem();
+                } else if(choiceNum === 6) {
+                    showHelp();
+                } else if(choiceNum === 7) {
+                    gameRunning = false;
+                    console.log("Farewell, traveller.");
+                } else {
+                    console.log("\nInvalid choice. Please select a number between 1 - 7.");
+                }
+            }
 
         }  catch(error) {
             console.log("\nError: " + error);
