@@ -710,6 +710,7 @@ function buyFromVillageStalls() {
 function handleCombat(battleWith) {
     let inBattle = true;
     let chosenWeapon = null;
+    let displayWeapons = true;
 
     // Set monster stats
     let monsterHealth;
@@ -718,113 +719,171 @@ function handleCombat(battleWith) {
     while(inBattle) {
         // Check which monster the player is battling
         if(battleWith === "The Soul Wrencher") {
-        monsterHealth = soulWrencherHealth;
-        monsterDamage = soulWrencherDamage;
+            monsterHealth = soulWrencherHealth;
+            monsterDamage = soulWrencherDamage;
 
-        // Check if the player has a weapon
-        if(hasItemType("weapon")) {
-            const weapons = getItemsByType("weapon");
+            // Check if the player has a weapon
+            if(hasItemType("weapon")) {
+                const weapons = getItemsByType("weapon");
 
-            // Display all weapons in inventory
-            console.log("·•– ٠⚜ WEAPONS ⚜٠ —•·");
-            weapons.forEach((weapon, index) => {
-                console.log("\n   " + (index + 1) + ". " + weapon.name + " - " + weapon.description);
-            });
+                // Display all weapons in inventory
+                let weaponChoice;
+                if(true) {
+                    console.log("·•– ٠⚜ WEAPONS ⚜٠ —•·");
+                    weapons.forEach((weapon, index) => {
+                        console.log("\n   " + (index + 1) + ". " + weapon.name + " - " + weapon.description);
+                    });
 
-            let weaponChoice = parseInt(readline.question("\nWhich weapon will you use? (Enter a number): "));
+                    weaponChoice = readline.question("\nWhich weapon will you use? (Enter a number): ");
 
-            if(weaponChoice > weapons.length || weaponChoice < weapons.length) {
-                console.log("Invalid choice. The Soul Wrencher takes advantage of your hesitation and dives forward. You move aside just in time, but not before its teeth scrape your shoulder.");
-                updateHealth(-monsterDamage);
-            }
-            
-            if(weaponChoice === 1) {
-                chosenWeapon = "Sword";
-                console.log("You pull your sword out of its sheath and leap at the monster. It reaches out to grab you with its long claws.");
-                if(hasItemType("armour")) {
-                    console.log("The Soul Wrencher's claws slam against your shield. It growls and narrows its eyes.");
-                    console.log("The monster slams you with its tail. You manage to block some of the damage with your shield, but still feel a sharp pain.");
-                    updateHealth(-(monsterDamage - sword.effect));
+                    if(weaponChoice.trim() === "" || isNaN(weaponChoice)) {
+                        console.log("Invalid choice. The Soul Wrencher takes advantage of your hesitation and dives forward. You move aside just in time, but not before its teeth scrape your shoulder.");
+                        updateHealth(-monsterDamage);
+                    }
 
-                    console.log("The Soul Wrencher advances towards you, eyes narrowed. You brace yourself.");
-                    console.log("1: Try to dodge");
-                    console.log("2: Attack");
-                    console.log("3: Use your shield to protect yourself.");
-                    let battleChoice = parseInt(readline.question("What will you do now?"));
-                    
-                    if(battleChoice === 1) {
-                        console.log("You dodge as fast as you can, but the Soul Wrencher swivles its head around and sinks its teeth into you. Blood pools on the ground.");
-                        inBattle = false;
-                        updateHealth(-100);
-                    } else if(battleChoice === 2) {
-                        console.log("You swing your sword at the monster and slash its face. It lets out a horrible screech and staggers back.");
-                        monsterHealth -= sword.effect;
-                        console.log("The Soul Wrencher opens its eyes and glares at you. It's blinded by the blood streaming into its eyes, but you can see how furious it is.");
-                        console.log("The monster lunges at you. You swiftly dodge it.");
-                        console.log("1: Leave the monster be");
-                        console.log("2: Finish off the monster");
-                        let secondaryBattleChoice = parseInt(readline.question("What will you do now?"));
+                    weaponChoice = parseInt(weaponChoice);
+                    if(weaponChoice > weapons.length || weaponChoice < weapons.length) {
+                        console.log("Invalid choice. The Soul Wrencher takes advantage of your hesitation and dives forward. You move aside just in time, but not before its teeth scrape your shoulder.");
+                        updateHealth(-monsterDamage);
+                    }
+                }
 
-                        if(secondaryBattleChoice === 1) {
-                            console.log("You walk past the creature carefully, as not to alert it of your location. The owl, who has been perched on that branch the entire time, watches you intently.");
-                            console.log("The Soul Wrencher stays still for a second. It then gives a low growl and slinks away.");
-                            inBattle = false;
-                        } else if(secondaryBattleChoice === 2) {
-                            console.log("You leap onto the monster, careful not to get scratched by the spikes on its back. The monster bucks and snarls. You manage to not fall off and, with all your might, slam your sword into the mosnter's head. It collapses to the ground. The patterns on its side ripple bright pink for a second, then it falls completely still.");
-                            console.log("You jump off the creature and step back. The Soul Wrencher is dead.");
-                            inBattle = false;
-                            console.log("The owl watches from behind you, not having moved an inch the entire time. Then, a swirling light appears in front of you. It forms into a pair of wings, with rings and the outline of a glow aroun them.");
-                            console.log("You reach out tentatively and touch the symbol. It glows a shade of rose, then disappears.");
-                            console.log("TOKEN COLLECTED.");
-                            inventory.push({...cherryBlossomToken});
-                            playerGold += 14;
-                            console.log("You have gained 14 gold.");
-                        }
-                    } else if(battleChoice === 3) {
-                        console.log("You raise your shield just in time as the monster lunges at you. The force of the impact sends you stumbling back, and you realise that your shield is cracked.");
-                        inventory.splice(inventory.indexOf("shield"), 1);
-                        console.log("The Soul Wrencher leaps at you and swipes at you with its claws. You stumble aside, but realise that the monster has managed to leave deep scratches across your body.");
-                        updateHealth(-monsterDamage * 2);
-                        console.log("You manage to steady yourself. The monster is looking at you with pure rage.");
+                if(weaponChoice === 1) {
+                    chosenWeapon = "Sword";
+                    console.log("You pull your sword out of its sheath and leap at the monster. It reaches out to grab you with its long claws.");
+                    if(hasItemType("armour")) {
+                        console.log("The Soul Wrencher's claws slam against your shield. It growls and narrows its eyes.");
+                        console.log("The monster slams you with its tail. You manage to block some of the damage with your shield, but still feel a sharp pain.");
+                        updateHealth(-(monsterDamage - sword.effect));
+
+                        console.log("The Soul Wrencher advances towards you, eyes narrowed. You brace yourself.");
                         console.log("1: Try to dodge");
                         console.log("2: Attack");
-                        let secondaryBattleChoice = parseInt(readline.question("What will you do now?"));
+                        console.log("3: Use your shield to protect yourself");
+                        let battleChoice = readline.question("What will you do now?");
+                        
+                        if(battleChoice.trim() === "" || isNaN(battleChoice)) {
+                            console.log("Invalid choice. The Soul Wrencher screeches and knocks you backwards, before sinking its teeth into your leg.");
+                            updateHealth(-monsterDamage);
+                        }
 
-                        if(secondaryBattleChoice === 1) {
-                            console.log("You try to dodge the Soul Wrencher's claws, and only just manage to do so. Your scratches are burning and slowing you down.");
-                            console.log("1: Run away");
-                            console.log("2: Stay and fight");
-                            let tertiaryBattleChoice = parseInt(readline.question("What will you do now?"));
+                        battleChoice = parseInt(battleChoice);
+                        if(battleChoice < 0 || battleChoice > 3) {
+                            console.log("Invalid choice. The Soul Wrencher screeches and knocks you backwards, before sinking its teeth into your leg.");
+                            updateHealth(-monsterDamage);
+                        }
 
-                            if(tertiaryBattleChoice === 1) {
-                                console.log("You realise that this is futile. You get up and race away into the thick of the woodlands. The Soul Wrencher merely turns its head to watch you go. A sort of terrifying smile flickers across its face. The monster turns around and stalks away.");
+                        if(battleChoice === 1) {
+                            console.log("You dodge as fast as you can, but the Soul Wrencher swivles its head around and sinks its teeth into you. Blood pools on the ground.");
+                            inBattle = false;
+                            updateHealth(-100);
+                        } else if(battleChoice === 2) {
+                            console.log("You swing your sword at the monster and slash its face. It lets out a horrible screech and staggers back.");
+                            monsterHealth -= sword.effect;
+                            console.log("The Soul Wrencher opens its eyes and glares at you. It's blinded by the blood streaming into its eyes, but you can see how furious it is.");
+                            console.log("The monster lunges at you. You swiftly dodge it.");
+                            console.log("1: Leave the monster be");
+                            console.log("2: Finish off the monster");
+                            let secondaryBattleChoice = readline.question("What will you do now?");
+
+                            if(secondaryBattleChoice.trim() === "" || isNaN(secondaryBattleChoice)) {
+                                console.log("Invalid choice. The monster tilts its head a little bit, trying to figure out where you are. It senses you, jumps forward and rips your arm out clean before you can move.");
+                                updateHealth(monsterDamage * 2);
+                            }
+
+                            secondaryBattleChoice = parseInt(secondaryBattleChoice);
+                            if(secondaryBattleChoice < 0 || secondaryBattleChoice > 2) {
+                                console.log("Invalid choice. The monster tilts its head a little bit, trying to figure out where you are. It senses you, jumps forward and rips your arm out clean before you can move.");
+                                updateHealth(monsterDamage * 2);
+                            }
+
+                            if(secondaryBattleChoice === 1) {
+                                console.log("You walk past the creature carefully, as not to alert it of your location. The owl, who has been perched on that branch the entire time, watches you intently.");
+                                console.log("The Soul Wrencher stays still for a second. It then gives a low growl and slinks away.");
                                 inBattle = false;
-                                currentLocation = "Woodlands - Relief";
-                            } else if(tertiaryBattleChoice === 2) {
-                                console.log("You stand your ground, despite the pain coursing through your body. The monster senses that you're weakened, and before you can do anything, it bounds forward and bites your head clean off. Your vision fades to black.");
+                                currentLocation = "Woodlands - End Battle Scene";
+                            } else if(secondaryBattleChoice === 2) {
+                                console.log("\nYou leap onto the monster, careful not to get scratched by the spikes on its back. The monster bucks and snarls. You manage to not fall off and, with all your might, slam your sword into the mosnter's head. It collapses to the ground. The patterns on its side ripple bright pink for a second, then it falls completely still.");
+                                console.log("\nYou jump off the creature and step back. The Soul Wrencher is dead.");
+                                inBattle = false;
+                                console.log("\nThe owl watches from behind you, not having moved an inch the entire time. Then, a swirling light appears in front of you. It forms into a pair of wings, with rings and the outline of a glow aroun them.");
+                                console.log("\nYou reach out tentatively and touch the symbol. It glows a shade of rose, then disappears.");
+                                console.log("TOKEN COLLECTED.");
+                                inventory.push({...cherryBlossomToken});
+                                playerGold += 14;
+                                console.log("You have gained 14 gold.");
+                                currentLocation = "Woodlands - End Battle Scene";
+                            }
+                        } else if(battleChoice === 3) {
+                            console.log("You raise your shield just in time as the monster lunges at you. The force of the impact sends you stumbling back, and you realise that your shield is cracked.");
+                            inventory.splice(inventory.indexOf("shield"), 1);
+                            console.log("The Soul Wrencher leaps at you and swipes at you with its claws. You stumble aside, but realise that the monster has managed to leave deep scratches across your body.");
+                            updateHealth(-monsterDamage * 2);
+                            console.log("You manage to steady yourself. The monster is looking at you with pure rage.");
+                            console.log("1: Try to dodge");
+                            console.log("2: Attack");
+                            let secondaryBattleChoice = readline.question("What will you do now?");
+
+                            if(secondaryBattleChoice.trim() === "" || isNaN(secondaryBattleChoice)) {
+                                console.log("Invalid choice. The monster slams you with its tail, causing you to fall. It then sinks its claws deep into your arm, crushing it.");
+                                updateHealth(-monsterDamage);
+                            }
+
+                            secondaryBattleChoice = parseInt(secondaryBattleChoice);
+                            if(secondaryBattleChoice < 0 || secondaryBattleChoice > 2) {
+                                console.log("Invalid choice. The monster slams you with its tail, causing you to fall. It then sinks its claws deep into your arm, crushing it.");
+                                updateHealth(-monsterDamage);
+                            }
+
+                            if(secondaryBattleChoice === 1) {
+                                console.log("You try to dodge the Soul Wrencher's claws, and only just manage to do so. Your scratches are burning and slowing you down.");
+                                console.log("1: Run away");
+                                console.log("2: Stay and fight");
+                                let tertiaryBattleChoice = readline.question("What will you do now?");
+
+                                if(tertiaryBattleChoice.trim() === "" || isNaN(tertiaryBattleChoice)) {
+                                    console.log("Invalid choice. You freeze and the monster takes full advantage of the situation. It swiftly closes its jaws around your neck and lifts you up. The world goes black.");
+                                    updateHealth(-100);
+                                    inBattle = false;
+                                }
+
+                                tertiaryBattleChoice = parseInt(tertiaryBattleChoice);
+                                if(tertiaryBattleChoice < 0 || tertiaryBattleChoice > 2) {
+                                    console.log("Invalid choice. You freeze and the monster takes full advantage of the situation. It swiftly closes its jaws around your neck and lifts you up. The world goes black.");
+                                    updateHealth(-100);
+                                    inBattle = false;
+                                }
+
+                                if(tertiaryBattleChoice === 1) {
+                                    console.log("You realise that this is futile. You get up and race away into the thick of the woodlands. The Soul Wrencher merely turns its head to watch you go. A sort of terrifying smile flickers across its face. The monster turns around and stalks away.");
+                                    inBattle = false;
+                                    currentLocation = "Woodlands - Relief";
+                                } else if(tertiaryBattleChoice === 2) {
+                                    console.log("You stand your ground, despite the pain coursing through your body. The monster senses that you're weakened, and before you can do anything, it bounds forward and bites your head clean off. Your vision fades to black.");
+                                    updateHealth(-100);
+                                    inBattle = false;
+                                }
+                            } else if(secondaryBattleChoice === 2) {
+                                console.log("You leap at the Soul Wrencher again and manage to leave a scratch above its shoulder with your sword.");
+                                console.log("You stumble to the floor. The monster remains still for a second, looking at the damage you caused. Its eyes then slowly turn to you. The look it's giving you sends chills down your spine. The Soul Wrencher takes a step forward, then opens its mouth in a earsplitting screech. Its patterns pulse bright magenta. The trees shake slightly. You feel your head ringing, then, you pass out.");
+                                console.log("You never wake up. The Soul Wrencher has claimed another soul.");
                                 updateHealth(-100);
                                 inBattle = false;
                             }
-                        } else if(secondaryBattleChoice === 2) {
-                            console.log("You leap at the Soul Wrencher again and manage to leave a scratch above its shoulder with your sword.");
-                            console.log("You stumble to the floor. The monster remains still for a second, looking at the damage you caused. Its eyes then slowly turn to you. The look it's giving you sends chills down your spine. The Soul Wrencher takes a step forward, then opens its mouth in a earsplitting screech. Its patterns pulse bright magenta. The trees shake slightly. You feel your head ringing, then, you pass out.");
-                            console.log("You never wake up. The Soul Wrencher has claimed another soul.");
-                            updateHealth(-100);
-                            inBattle = false;
                         }
+                    } else {
+                        console.log("Before you can move, the monster's claws swipe at you and blood spray onto the ground.");
+                        updateHealth(-monsterDamage);
+                        console.log("The monster slams you with its tail. You fall against a tree, feeling a sharp pain.");
+                        updateHealth(-monsterDamage);
                     }
-                } else {
-                    console.log("Before you can move, the monster's claws swipe at you and blood spray onto the ground.");
-                    updateHealth(-monsterDamage);
-                    console.log("The monster slams you with its tail. You fall against a tree, feeling a sharp pain.");
-                    updateHealth(-monsterDamage);
                 }
             }
         }
     }
+    if(playerHealth <= 0) {
+        inBattle = false;
     }
-    
-    
 }
 
 // ---------------------------
