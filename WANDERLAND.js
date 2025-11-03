@@ -710,7 +710,6 @@ function buyFromVillageStalls() {
 function handleCombat(battleWith) {
     let inBattle = true;
     let chosenWeapon = null;
-    let displayWeapons = true;
 
     // Set monster stats
     let monsterHealth;
@@ -727,25 +726,23 @@ function handleCombat(battleWith) {
                 const weapons = getItemsByType("weapon");
 
                 // Display all weapons in inventory
-                let weaponChoice;
-                if(true) {
-                    console.log("·•– ٠⚜ WEAPONS ⚜٠ —•·");
-                    weapons.forEach((weapon, index) => {
-                        console.log("\n   " + (index + 1) + ". " + weapon.name + " - " + weapon.description);
-                    });
+                console.log("·•– ٠⚜ WEAPONS ⚜٠ —•·");
+                weapons.forEach((weapon, index) => {
+                    console.log("\n   " + (index + 1) + ". " + weapon.name + " - " + weapon.description);
+                });
 
-                    weaponChoice = readline.question("\nWhich weapon will you use? (Enter a number): ");
+                let weaponChoice = readline.question("\nWhich weapon will you use? (Enter a number): ");
 
-                    if(weaponChoice.trim() === "" || isNaN(weaponChoice)) {
-                        console.log("Invalid choice. The Soul Wrencher takes advantage of your hesitation and dives forward. You move aside just in time, but not before its teeth scrape your shoulder.");
-                        updateHealth(-monsterDamage);
-                    }
+                if(weaponChoice.trim() === "" || isNaN(weaponChoice)) {
+                    console.log("Invalid choice. The Soul Wrencher takes advantage of your hesitation and dives forward. You move aside just in time, but not before its teeth scrape your shoulder.");
+                    updateHealth(-monsterDamage);
+                }
 
-                    weaponChoice = parseInt(weaponChoice);
-                    if(weaponChoice > weapons.length || weaponChoice < weapons.length) {
-                        console.log("Invalid choice. The Soul Wrencher takes advantage of your hesitation and dives forward. You move aside just in time, but not before its teeth scrape your shoulder.");
-                        updateHealth(-monsterDamage);
-                    }
+                weaponChoice = parseInt(weaponChoice);
+                if(weaponChoice > weapons.length || weaponChoice < weapons.length) {
+                    console.log("Invalid choice. The Soul Wrencher takes advantage of your hesitation and dives forward. You move aside just in time, but not before its teeth scrape your shoulder.");
+                    updateHealth(-monsterDamage);
+                    continue;
                 }
 
                 if(weaponChoice === 1) {
@@ -786,15 +783,26 @@ function handleCombat(battleWith) {
                             console.log("2: Finish off the monster");
                             let secondaryBattleChoice = readline.question("What will you do now?");
 
+                            let firstDamage = true;
                             if(secondaryBattleChoice.trim() === "" || isNaN(secondaryBattleChoice)) {
-                                console.log("Invalid choice. The monster tilts its head a little bit, trying to figure out where you are. It senses you, jumps forward and rips your arm out clean before you can move.");
-                                updateHealth(monsterDamage * 2);
+                                if(firstDamage === true) {
+                                    console.log("Invalid choice. The monster tilts its head a little bit, trying to figure out where you are. It senses you, jumps forward and rips your arm out clean before you can move.");
+                                    updateHealth(monsterDamage * 2);
+                                    firstDamage = false;
+                                } else {
+                                    console.log("Invalid choice. The monster scratches you across your face, and blood spills onto the floor.");
+                                }
                             }
 
                             secondaryBattleChoice = parseInt(secondaryBattleChoice);
                             if(secondaryBattleChoice < 0 || secondaryBattleChoice > 2) {
-                                console.log("Invalid choice. The monster tilts its head a little bit, trying to figure out where you are. It senses you, jumps forward and rips your arm out clean before you can move.");
-                                updateHealth(monsterDamage * 2);
+                                if(firstDamage === true) {
+                                    console.log("Invalid choice. The monster tilts its head a little bit, trying to figure out where you are. It senses you, jumps forward and rips your arm out clean before you can move.");
+                                    updateHealth(monsterDamage * 2);
+                                    firstDamage = false;
+                                } else {
+                                    console.log("Invalid choice. The monster scratches you across your face, and blood spills onto the floor.");
+                                }
                             }
 
                             if(secondaryBattleChoice === 1) {
